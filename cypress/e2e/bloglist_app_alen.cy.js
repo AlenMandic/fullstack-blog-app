@@ -16,9 +16,20 @@ describe('Blog posting app', () => {
   // needs to be completed
   it('User can login successfully', function() {
     cy.contains('Log in').click()
-    cy.contains('#username').type('test-username1')
-    cy.contains('#password').type('test-password1')
+    cy.get('#username-input').type('testingusername1') // an element with an id of username
+    cy.get('#password-input').type('testingpassword1')
+    cy.contains('Login').click()
 
-    cy.contains('test-username1 logged in successfully.')
+    cy.contains('testingname1 is logged in')
+  })
+
+  it.only('Login fails with the wrong password provided', function() {
+    cy.contains('Log in').click()
+    cy.get('#username-input').type('testingusername1')
+    cy.get('#password-input').type('wrongpassword')
+    cy.contains('Login').click()
+
+    cy.contains('Login failed. Check login details: ')
+    cy.get('html').should('not.contain', 'testingname1 is logged in')
   })
 })
