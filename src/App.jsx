@@ -3,11 +3,12 @@ import { useState, useEffect } from 'react'
 import loginService from './services/handleLogin'
 import blogService from './services/handleBlogs'
 import userLikesService from './services/handleUserLikes'
-import AddBlog from './components/addBlogForm'
-import CreateLoginForm from './components/createLoginForm'
+import AddBlog from './components/AddBlogForm'
+import CreateLoginForm from './components/CreateLoginForm'
 import UserBlog from './components/UserBlog'
 import { NotificationError, NotificationSuccess, } from './components/Notification'
 import ExplorePage from './components/ExplorePage'
+import CreateSignUpForm from './components/CreateSignupForm'
 
 export default function App() {
 
@@ -29,7 +30,7 @@ export default function App() {
         setExplorePageState(explorePageState)
 
       } catch(err) {
-        console.log(err)
+        console.error('error fetching initial blogs for explore page: ', err)
       }
     }
     createExplorePage()
@@ -128,8 +129,8 @@ export default function App() {
       setPassword('')
       showSuccessNotification('Logged in successfully.')
     } catch (err) {
-      showErrorNotification('Login failed. Check login details: ', err.message)
-      console.log('Error from catch block in LoginComponent frontend, login failed: ', err)
+      showErrorNotification('Login failed. Verify login details')
+      console.log(err)
       resetForm()
     }
   }
@@ -158,6 +159,7 @@ export default function App() {
     setUser(null)
     setUserLikedPosts([])
     blogService.setToken(null)
+    userLikesService.setToken(null)
     resetForm()
   }
 
@@ -182,15 +184,19 @@ export default function App() {
     <>
       <NotificationError message={notificationError} />
       <NotificationSuccess message={notificationSuccess} />
-      <h1>Blog saving app.</h1>
+      <h1>Blog sharing app</h1>
       <h3>Save your favorite blogs and their details to never lose them again!</h3>
-      {user && (<h2>{user.name} is logged in</h2>)}
+      {user && (<h2>Logged in as {user.name}</h2>)}
       {!user && createLoginForm()}
+      {!user && <CreateSignUpForm />}
       {user && <button onClick={handleLogout}>Log out</button>}
       {user && (<div>{addBlog()}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
       <h1>Front Page</h1>
       <h3>Explore blogs posted by others and interact with them.</h3>
       <ExplorePage explorePageState={explorePageState} user={user} userLikedBlogs={userLikedPosts}/>
+      <footer>
+      <h3>Thanks for browsing through our site. We hope you enjoyed your stay! 😄</h3>
+      </footer>
     </>
   )
 }

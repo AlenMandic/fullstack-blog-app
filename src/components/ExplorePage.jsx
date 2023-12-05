@@ -65,9 +65,6 @@ export default function ExplorePage({
         </select>
       </label>
       {returnSortedPage}
-      <h3>
-        Thanks for browsing through our site. We hope you enjoyed your stay! 😄
-      </h3>
     </div>
   )
 }

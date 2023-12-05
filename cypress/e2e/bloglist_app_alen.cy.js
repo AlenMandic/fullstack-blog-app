@@ -29,7 +29,7 @@ describe('Blog posting app', () => {
     cy.get('#password-input').type('wrongpassword')
     cy.contains('Login').click()
 
-    cy.contains('Login failed. Check login details: ')
+    cy.contains('Login failed. Verify login details')
     cy.get('html').should('not.contain', 'testingname1 is logged in')
   })
 })

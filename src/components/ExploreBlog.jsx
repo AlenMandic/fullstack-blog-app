@@ -4,7 +4,6 @@ import userLikeService from '../services/handleUserLikes'
 export default function ExploreBlog({ blogObject, user, userLikedBlogs }) {
 
   const [showFullBlogs, setShowFullBlogs] = useState(false)
-  //
   const [isLiked, setIsLiked] = useState(() => {
     const isThisLiked = userLikedBlogs.includes(blogObject.id)
     return isThisLiked

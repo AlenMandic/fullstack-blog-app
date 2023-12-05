@@ -17,12 +17,12 @@ export default function CreateLoginForm({
     if(showLoginForm) {
       return <div><form className="login-form" onSubmit={handleLogin}>
         <div>
-       Username <input value={username} name="username-input" id="username-input" type="text" onChange={({
+       Username <input value={username} required name="username-input" id="username-input" type="text" onChange={({
             target
           }) => setUsername(target.value)}></input>
         </div>
         <div>
-       Password <input value={password} name="password-input" id="password-input" type="password" onChange={({
+       Password <input value={password} required name="password-input" id="password-input" type="password" onChange={({
             target
           }) => setPassword(target.value)}></input>
         </div>
