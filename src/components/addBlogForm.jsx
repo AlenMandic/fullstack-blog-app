@@ -72,17 +72,17 @@ export default function AddBlog({ updateUserPageState }) {
           <h2>Save a new blog</h2>
           <form onSubmit={handleBlogSubmit}>
             <div>
-            Title: <input type="text" name="title-input" required value={title} onChange={({
+            Title: <input type="text" name="title-input" minLength={5} maxLength={60} required value={title} onChange={({
                 target
               }) => setTitle(target.value)}></input>
             </div>
             <div>
-            Author: <input type="text" name="author-input" required value={author} onChange={({
+            Author: <input type="text" name="author-input" minLength={5} maxLength={60} required value={author} onChange={({
                 target
               }) => setAuthor(target.value)}></input>
             </div>
             <div>
-            URL: <input type="text" name="url-input" required value={url} onChange={({
+            URL: <input type="text" name="url-input" minLength={5} maxLength={100} required value={url} onChange={({
                 target
               }) => setUrl(target.value)}></input>
             </div>

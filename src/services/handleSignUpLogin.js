@@ -1,5 +1,17 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3003/api/login'
+const baseUrlSignUp = 'http://localhost:3003/api/users'
+
+// attempt to register new user
+const registerUser = async credentials => {
+  try {
+    const response = await axios.post(baseUrlSignUp, credentials)
+    console.log(response)
+    return response
+  } catch(err) {
+    console.log(err)
+  }
+}
 
 // send username and password to auth route. If successful login, this should return to us the json web token which we can use and user data.
 const login = async credentials => {
@@ -11,4 +23,4 @@ const login = async credentials => {
   }
 }
 
-export default { login }
+export default { login, registerUser }

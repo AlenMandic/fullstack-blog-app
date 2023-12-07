@@ -1,6 +1,6 @@
 import './style.css'
 import { useState, useEffect } from 'react'
-import loginService from './services/handleLogin'
+import loginService from './services/handleSignUpLogin'
 import blogService from './services/handleBlogs'
 import userLikesService from './services/handleUserLikes'
 import AddBlog from './components/AddBlogForm'
@@ -8,7 +8,10 @@ import CreateLoginForm from './components/CreateLoginForm'
 import UserBlog from './components/UserBlog'
 import { NotificationError, NotificationSuccess, } from './components/Notification'
 import ExplorePage from './components/ExplorePage'
+import UsersPage from './components/UsersPage'
+import UserPage from './components/UserPage'
 import CreateSignUpForm from './components/CreateSignupForm'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
 export default function App() {
 
@@ -91,23 +94,7 @@ export default function App() {
     }, 5000)
   }
 
-  function createLoginForm() {
-    return (
-      <CreateLoginForm
-        handleLogin={handleLogin}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-      />
-    )
-  }
-  // returns the form for adding blogs. Whenever a blog is added, App.jsx receives the data so we can update states.
-  function addBlog() {
-    return <AddBlog updateUserPageState={handleBlogSubmitCallback}/>
-  }
-
-  // updates USER and EXPLORE page state when a user adds a new post from addBlogForm.jsx
+  // updates Homepage and Explore page state when a user adds a new post from addBlogForm.jsx
   function handleBlogSubmitCallback(blogObject) {
     const oldUserBlogs = blogs
     const oldExploreBlogs = explorePageState
@@ -124,7 +111,7 @@ export default function App() {
 
       window.localStorage.setItem('loggedInBlogAppUser', JSON.stringify(user))
       setUser(user)
-      blogService.setToken(user.token) // changes the private "token" variable in our services to current auth-user token, enabling our services to use the token for requests. These requests will also need an 'Authorization' header with the token sent with them.
+      blogService.setToken(user.token) // changes the private "token" variable in our /services to current auth-user token, enabling our services to use the token for requests.
       setUsername('')
       setPassword('')
       showSuccessNotification('Logged in successfully.')
@@ -184,16 +171,42 @@ export default function App() {
     <>
       <NotificationError message={notificationError} />
       <NotificationSuccess message={notificationSuccess} />
+      {!user && <CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}
+      {!user && <CreateSignUpForm />}
+      <Router>
+      <div>
+        <Link style={{ padding: '5px' }} to="/">Home</Link>
+        <Link style={{ padding: '5px' }} to="/blogs">Front Page</Link>
+        <Link style={{ padding: '5px' }} to="/users">Users</Link>
+      </div>
+
+      <Routes>
+        <Route path="/" element={
+      <>
       <h1>Blog sharing app</h1>
       <h3>Save your favorite blogs and their details to never lose them again!</h3>
+      {!user && <div><p>Log in to post a new blog or view your saved blogs.</p></div>}
       {user && (<h2>Logged in as {user.name}</h2>)}
-      {!user && createLoginForm()}
-      {!user && <CreateSignUpForm />}
       {user && <button onClick={handleLogout}>Log out</button>}
-      {user && (<div>{addBlog()}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
-      <h1>Front Page</h1>
-      <h3>Explore blogs posted by others and interact with them.</h3>
-      <ExplorePage explorePageState={explorePageState} user={user} userLikedBlogs={userLikedPosts}/>
+      {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
+      <Link style={{ padding: '5px' }} to="/blogs">View blogs posted by others</Link>
+        </>} />
+        <Route path="/blogs" element={
+        <>
+        {user && (<h2>Logged in as {user.name}</h2>)}
+        <ExplorePage explorePageState={explorePageState} user={user} userLikedBlogs={userLikedPosts}/>
+        </>
+        }/>
+        <Route path="/users" element={
+        <>
+        {user && (<h2>Logged in as {user.name}</h2>)}
+        <UsersPage />
+        </>}></Route>
+        <Route path="/users/:userId" element={<UserPage />}>
+        </Route>
+      </Routes>
+
+      </Router>
       <footer>
       <h3>Thanks for browsing through our site. We hope you enjoyed your stay! 😄</h3>
       </footer>

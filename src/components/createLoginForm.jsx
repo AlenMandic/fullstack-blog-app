@@ -17,7 +17,7 @@ export default function CreateLoginForm({
     if(showLoginForm) {
       return <div><form className="login-form" onSubmit={handleLogin}>
         <div>
-       Username <input value={username} required name="username-input" id="username-input" type="text" onChange={({
+       Username <input value={username} minLength={3} maxLength={30} required name="username-input" id="username-input" type="text" onChange={({
             target
           }) => setUsername(target.value)}></input>
         </div>
