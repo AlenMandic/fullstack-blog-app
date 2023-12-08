@@ -35,6 +35,7 @@ export default function ExplorePage({
           blogObject={blog}
           user={user}
           userLikedBlogs={userLikedBlogs}
+          showPostedBy={true}
         />
       ))}
     </ul>
@@ -48,6 +49,7 @@ export default function ExplorePage({
           blogObject={blog}
           user={user}
           userLikedBlogs={userLikedBlogs}
+          showPostedBy={true}
         />
       ))}
     </ul>

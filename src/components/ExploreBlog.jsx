@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
+import { Link } from 'react-router-dom'
 
-export default function ExploreBlog({ blogObject, user, userLikedBlogs }) {
+export default function ExploreBlog({ blogObject, user, userLikedBlogs, showPostedBy }) {
 
   const [showFullBlogs, setShowFullBlogs] = useState(false)
   const [isLiked, setIsLiked] = useState(() => {
@@ -65,7 +66,7 @@ export default function ExploreBlog({ blogObject, user, userLikedBlogs }) {
           <h3>{blogObject.author}</h3>
           <p>{blogObject.url}</p>
           <p>Likes: {blogObject.likes}</p>
-          <p>Posted by: {blogObject.postedBy}</p>
+          {showPostedBy && <p>Posted by: <Link to={`/users/${blogObject.userId.id}`}>{blogObject.postedBy}</Link></p>}
           {showLikeButton()}
           <button onClick={handleShowBlogs}>Hide</button>
         </div>

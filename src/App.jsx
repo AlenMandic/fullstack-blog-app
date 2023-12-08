@@ -173,42 +173,40 @@ export default function App() {
       <NotificationSuccess message={notificationSuccess} />
       {!user && <CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}
       {!user && <CreateSignUpForm />}
+      {user && <button onClick={handleLogout}>Log out</button>}
       <Router>
       <div>
         <Link style={{ padding: '5px' }} to="/">Home</Link>
         <Link style={{ padding: '5px' }} to="/blogs">Front Page</Link>
         <Link style={{ padding: '5px' }} to="/users">Users</Link>
+        {user && (<h2>Logged in as {user.name}</h2>)}
       </div>
 
-      <Routes>
-        <Route path="/" element={
+       <Routes>
+         <Route path="/" element={
       <>
-      <h1>Blog sharing app</h1>
-      <h3>Save your favorite blogs and their details to never lose them again!</h3>
-      {!user && <div><p>Log in to post a new blog or view your saved blogs.</p></div>}
-      {user && (<h2>Logged in as {user.name}</h2>)}
-      {user && <button onClick={handleLogout}>Log out</button>}
+      <h1>Welcome to SnapBlog, a blog sharing site!</h1>
+      <h3>Share and save your favorite blog posts with others.</h3>
+      {!user && <div><p>Log in to post new blogs or view your saved blogs right here.</p></div>}
       {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
       <Link style={{ padding: '5px' }} to="/blogs">View blogs posted by others</Link>
         </>} />
         <Route path="/blogs" element={
         <>
-        {user && (<h2>Logged in as {user.name}</h2>)}
         <ExplorePage explorePageState={explorePageState} user={user} userLikedBlogs={userLikedPosts}/>
         </>
         }/>
         <Route path="/users" element={
         <>
-        {user && (<h2>Logged in as {user.name}</h2>)}
         <UsersPage />
         </>}></Route>
-        <Route path="/users/:userId" element={<UserPage />}>
+        <Route path="/users/:userId" element={<UserPage user={user} userLikedBlogs={userLikedPosts} />}>
         </Route>
       </Routes>
 
       </Router>
       <footer>
-      <h3>Thanks for browsing through our site. We hope you enjoyed your stay! 😄</h3>
+      <h3>Thanks for browsing through SnapBlog. We hope you enjoyed your stay and found interesting blogs! 😄</h3>
       </footer>
     </>
   )
