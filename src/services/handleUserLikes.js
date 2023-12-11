@@ -17,9 +17,8 @@ const getLikedPosts = async userId => {
     const baseUrl = `http://localhost:3003/api/users/${id}/likes`
 
     const response = await axios.get(baseUrl)
-
-    console.log(response.data)
     return response.data
+
   } catch (err) {
     console.log(err)
   }

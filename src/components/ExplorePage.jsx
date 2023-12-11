@@ -5,7 +5,6 @@ import ExploreBlog from './ExploreBlog'
 export default function ExplorePage({
   explorePageState,
   user,
-  userLikedBlogs,
 }) {
   const [publicBlogs, setPublicBlogs] = useState([])
   const [sorting, setSorting] = useState('default')
@@ -34,7 +33,6 @@ export default function ExplorePage({
           key={blog.id}
           blogObject={blog}
           user={user}
-          userLikedBlogs={userLikedBlogs}
           showPostedBy={true}
         />
       ))}
@@ -48,7 +46,6 @@ export default function ExplorePage({
           key={blog.id}
           blogObject={blog}
           user={user}
-          userLikedBlogs={userLikedBlogs}
           showPostedBy={true}
         />
       ))}

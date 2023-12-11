@@ -10,9 +10,7 @@ export default function UserPage({ user, userLikedBlogs }) {
     const [showErrorPage, setShowErrorPage] = useState(false)
 
     const { userId } = useParams()
-    console.log('User ID for individual user route being called: ', userId)
 
-    // retrieve the initial user profile and display it. IMPLEMENT If it doesn't exist, return an error page.
     useEffect(() => {
 
         const getUserProfile = async () => {
@@ -60,7 +58,7 @@ export default function UserPage({ user, userLikedBlogs }) {
     return (
         <>
         {renderUserProfile}
-        {userBlogs}
+        {!(showErrorPage) && userBlogs.length === 0 ? <h2>{currentUserProfile.name} has not posted any blogs yet!</h2> : userBlogs}
         </>
     )
 }

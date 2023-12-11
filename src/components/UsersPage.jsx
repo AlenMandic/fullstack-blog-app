@@ -33,7 +33,7 @@ const ourUsers = <ul>
     return (
     <>
     <h1>Welcome to our users page.</h1>
-    <p>You can view individual user profiles and see their content.</p>
+    <p>View individual user profiles and their posts.</p>
     {ourUsers}
     </>
 )

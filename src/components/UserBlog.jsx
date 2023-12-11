@@ -18,7 +18,7 @@ export default function UserBlog({ blogObject, handleDeleteCallback }) {
         <div className="full-blog">
           <h2>{blogObject.title}</h2>
           <h3>{blogObject.author}</h3>
-          <p>{blogObject.url}</p>
+          <a href={blogObject.url} target="_blank" rel="noreferrer">{blogObject.url}</a>
           <p>Likes: {blogObject.likes}</p>
           <button onClick={handleDelete}>Delete blog</button>
           <button onClick={handleShowBlogs}>Hide</button>

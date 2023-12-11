@@ -4,7 +4,6 @@ import { NotificationError, NotificationSuccess } from './Notification'
 
 export default function CreateSignUpForm() {
 
-    const [showSignUpForm, setShowSignUpForm] = useState(false)
     const [username, setUsername] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -13,9 +12,6 @@ export default function CreateSignUpForm() {
     const [notificationError, setNotificationError] = useState(null)
     const [notificationSuccess, setNotificationSuccess] = useState(null)
 
-    function handleShowForm() {
-        setShowSignUpForm(!showSignUpForm)
-      }
 
       function showErrorNotification(message) {
         setNotificationError(message)
@@ -72,9 +68,11 @@ export default function CreateSignUpForm() {
          }
       }
 
-      function showForm() {
-        if(showSignUpForm) {
-          return <div><form className="signup-form" onSubmit={handleSignUp}>
+          return <div>
+        <NotificationError message={notificationError} />
+        <NotificationSuccess message={notificationSuccess} />
+        <h1>Create your SnapBlog account!</h1>
+            <form className="signup-form" onSubmit={handleSignUp}>
             <div>
            Username <input value={username} required minLength={3} maxLength={30} name="username-input" id="username-input" type="text" onChange={({
                 target
@@ -100,19 +98,5 @@ export default function CreateSignUpForm() {
               <button type="submit">Create account</button>
             </div>
           </form>
-          <button onClick={handleShowForm}>Cancel</button>
           </div>
-        } else {
-          return <button onClick={handleShowForm}>Create account</button>
-        }
-
       }
-
-      return (
-        <>
-        <NotificationError message={notificationError} />
-        <NotificationSuccess message={notificationSuccess} />
-        {showForm()}
-        </>
-        )
-}

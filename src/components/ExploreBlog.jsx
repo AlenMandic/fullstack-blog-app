@@ -2,22 +2,33 @@ import { useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
 import { Link } from 'react-router-dom'
 
-export default function ExploreBlog({ blogObject, user, userLikedBlogs, showPostedBy }) {
+export default function ExploreBlog({ blogObject, user, showPostedBy }) {
 
   const [showFullBlogs, setShowFullBlogs] = useState(false)
+  const [userLikedBlogs, setUserLikedBlogs] = useState([])
   const [isLiked, setIsLiked] = useState(() => {
     const isThisLiked = userLikedBlogs.includes(blogObject.id)
     return isThisLiked
   })
 
-  // Making sure liked posts state persists through page refresh.
   useEffect(() => {
+    const fetchUserLikedBlogs = async () => {
 
-    if(userLikedBlogs.includes(blogObject.id)) {
-      setIsLiked(true)
+      try {
+        if (user) {
+          const result = await userLikeService.getLikedPosts(user)
+
+          setUserLikedBlogs(result)
+          setIsLiked(result.includes(blogObject.id))
+        }
+
+      } catch (error) {
+        console.error('Error fetching user liked blogs:', error)
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userLikedBlogs])
+
+    fetchUserLikedBlogs()
+  }, [user, blogObject.id])
 
   function handleShowBlogs() {
     setShowFullBlogs(!showFullBlogs)
@@ -30,7 +41,6 @@ export default function ExploreBlog({ blogObject, user, userLikedBlogs, showPost
     }
 
     console.log('Fire like service for: ', blogObject.id)
-    // Toggle the state based on the current state, not the previous state
     setIsLiked(true)
 
     const result = await userLikeService.handleLikeDislike(blogObject, 'like')
@@ -44,7 +54,6 @@ export default function ExploreBlog({ blogObject, user, userLikedBlogs, showPost
     }
 
     console.log('Fire dislike service for: ', blogObject.id)
-    // Toggle the state based on the current state, not the previous state
     setIsLiked(false)
 
     const result = await userLikeService.handleLikeDislike(blogObject, 'dislike')
@@ -64,9 +73,9 @@ export default function ExploreBlog({ blogObject, user, userLikedBlogs, showPost
         <div className="full-blog">
           <h2>{blogObject.title}</h2>
           <h3>{blogObject.author}</h3>
-          <p>{blogObject.url}</p>
+          <a href="https://old.reddit.com/" target="_blank" rel="noreferrer">{blogObject.url}</a>
           <p>Likes: {blogObject.likes}</p>
-          {showPostedBy && <p>Posted by: <Link to={`/users/${blogObject.userId.id}`}>{blogObject.postedBy}</Link></p>}
+          {showPostedBy && <p>Posted by: <Link to={`/users/${user.id}`}>{blogObject.postedBy}</Link></p>}
           {showLikeButton()}
           <button onClick={handleShowBlogs}>Hide</button>
         </div>
@@ -74,7 +83,7 @@ export default function ExploreBlog({ blogObject, user, userLikedBlogs, showPost
     } else {
       return (
         <div className="half-blog">
-          <h2>{blogObject.title}:</h2>
+          <h2>{blogObject.title}: </h2>
           <h2>{blogObject.author}</h2>
           <button onClick={handleShowBlogs}>View more</button>
         </div>

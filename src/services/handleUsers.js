@@ -23,7 +23,6 @@ const getIndividualUser = async (userId) => {
         console.log(err)
 
         if(err.response.status === 404) {
-            console.log('Logging 404 error from service.')
             return err.response.status
         } else if(err.response.status === 400) {
             return err.response.status

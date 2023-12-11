@@ -1,4 +1,5 @@
-import { React, useState } from 'react'
+import  React from 'react'
+
 export default function CreateLoginForm({
   handleLogin,
   username,
@@ -7,16 +8,10 @@ export default function CreateLoginForm({
   setPassword
 }) {
 
-  const [showLoginForm, setShowLoginForm] = useState(false)
 
-  function handleShowForm() {
-    setShowLoginForm(!showLoginForm)
-  }
-
-  function showForm() {
-    if(showLoginForm) {
-      return <div><form className="login-form" onSubmit={handleLogin}>
+    return <div><form className="login-form" onSubmit={handleLogin}>
         <div>
+          <h1>Log in page</h1>
        Username <input value={username} minLength={3} maxLength={30} required name="username-input" id="username-input" type="text" onChange={({
             target
           }) => setUsername(target.value)}></input>
@@ -30,13 +25,6 @@ export default function CreateLoginForm({
           <button type="submit">Login</button>
         </div>
       </form>
-      <button onClick={handleShowForm}>Cancel</button>
-      </div>
-    } else {
-      return <button onClick={handleShowForm}>Log in</button>
-    }
-
+       </div>
   }
 
-  return showForm()
-}
