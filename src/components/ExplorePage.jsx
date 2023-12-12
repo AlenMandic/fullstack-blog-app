@@ -34,6 +34,7 @@ export default function ExplorePage({
           blogObject={blog}
           user={user}
           showPostedBy={true}
+          enableLikeButton={true}
         />
       ))}
     </ul>
@@ -47,6 +48,7 @@ export default function ExplorePage({
           blogObject={blog}
           user={user}
           showPostedBy={true}
+          enableLikeButton={true}
         />
       ))}
     </ul>

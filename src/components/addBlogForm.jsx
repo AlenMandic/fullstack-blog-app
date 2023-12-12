@@ -2,6 +2,7 @@ import { React, useState } from 'react'
 import blogService from '../services/handleBlogs'
 import { NotificationError, NotificationSuccess } from './Notification'
 export default function AddBlog({ updateUserPageState, user }) {
+
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -41,8 +42,10 @@ export default function AddBlog({ updateUserPageState, user }) {
   }
 
   async function handleBlogSubmit(e) {
+
     e.preventDefault()
     resetOurForm()
+
     try {
       const result = await blogService.addBlog(blogObject)
 
@@ -104,7 +107,7 @@ export default function AddBlog({ updateUserPageState, user }) {
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
           <button onClick={handleShowPostBlogForm}>Post new blog</button>
-      </>
+            </>
     }
   }
   return showPostBlogForm()

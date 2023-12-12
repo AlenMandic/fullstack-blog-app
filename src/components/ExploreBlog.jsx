@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
 import { Link } from 'react-router-dom'
 
-export default function ExploreBlog({ blogObject, user, showPostedBy }) {
+export default function ExploreBlog({ blogObject, user, showPostedBy, enableLikeButton }) {
 
   const [showFullBlogs, setShowFullBlogs] = useState(false)
   const [userLikedBlogs, setUserLikedBlogs] = useState([])
@@ -11,6 +11,7 @@ export default function ExploreBlog({ blogObject, user, showPostedBy }) {
     return isThisLiked
   })
 
+// figure out which blogs have been liked by the user to handle like/dislike buttons
   useEffect(() => {
     const fetchUserLikedBlogs = async () => {
 
@@ -75,8 +76,8 @@ export default function ExploreBlog({ blogObject, user, showPostedBy }) {
           <h3>{blogObject.author}</h3>
           <a href="https://old.reddit.com/" target="_blank" rel="noreferrer">{blogObject.url}</a>
           <p>Likes: {blogObject.likes}</p>
-          {showPostedBy && <p>Posted by: <Link to={`/users/${user.id}`}>{blogObject.postedBy}</Link></p>}
-          {showLikeButton()}
+          {showPostedBy && <p>Posted by: <Link to={`/users/${blogObject.postedBy.id}`}>{blogObject.postedBy.username}</Link></p>}
+          {enableLikeButton && showLikeButton()}
           <button onClick={handleShowBlogs}>Hide</button>
         </div>
       )

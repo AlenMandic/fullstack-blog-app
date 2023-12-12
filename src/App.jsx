@@ -25,7 +25,6 @@ export default function App() {
   const [explorePageState, setExplorePageState] = useState([])
   const [showUserPosts, setShowUserPosts] = useState(true)
 
-
   // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm, this gets updated, and then finally ExplorePage.
   useEffect(() => {
     const createExplorePage = async () => {
@@ -121,7 +120,8 @@ export default function App() {
 
       window.localStorage.setItem('loggedInBlogAppUser', JSON.stringify(user))
       setUser(user)
-      blogService.setToken(user.token) // changes the private "token" variable in our /services to current auth-user token, enabling our services to use the token for requests.
+      blogService.setToken(user.token)
+      userLikesService.setToken(user.token)
       setUsername('')
       setPassword('')
       showSuccessNotification('Logged in successfully.')
