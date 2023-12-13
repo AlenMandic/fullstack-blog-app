@@ -206,13 +206,13 @@ export default function App() {
 
           <Route path="/blogs" element={<ExplorePage explorePageState={explorePageState} user={user}/>}/>
 
-          <Route path="/users" element={<UsersPage />}></Route>
+          <Route path="/users" element={<UsersPage />}/>
 
-          <Route path="/users/:userId" element={<UserPage user={user} />}></Route>
+          <Route path="/users/:userId" element={<UserPage user={user} />}/>
 
-          <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}></Route>
+          <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}/>
 
-          <Route path="/register" element={<CreateSignUpForm />}></Route>
+          <Route path="/register" element={<CreateSignUpForm />}/>
 
         </Routes>
 
