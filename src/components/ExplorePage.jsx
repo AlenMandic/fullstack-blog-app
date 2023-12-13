@@ -5,7 +5,6 @@ import ExploreBlog from './ExploreBlog'
 export default function ExplorePage({
   explorePageState,
   user,
-  userLikedBlogs,
 }) {
   const [publicBlogs, setPublicBlogs] = useState([])
   const [sorting, setSorting] = useState('default')
@@ -34,7 +33,8 @@ export default function ExplorePage({
           key={blog.id}
           blogObject={blog}
           user={user}
-          userLikedBlogs={userLikedBlogs}
+          showPostedBy={true}
+          enableLikeButton={true}
         />
       ))}
     </ul>
@@ -47,7 +47,8 @@ export default function ExplorePage({
           key={blog.id}
           blogObject={blog}
           user={user}
-          userLikedBlogs={userLikedBlogs}
+          showPostedBy={true}
+          enableLikeButton={true}
         />
       ))}
     </ul>
@@ -57,6 +58,8 @@ export default function ExplorePage({
 
   return (
     <div>
+      <h1>Front Page</h1>
+      <h3>Explore blogs posted by others and interact with them.</h3>
       <label>
         Sort by:
         <select value={sorting} onChange={(e) => setSorting(e.target.value)}>

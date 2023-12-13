@@ -1,42 +1,35 @@
-import { React, useState } from 'react'
-export default function CreateLoginForm({
-  handleLogin,
-  username,
-  setUsername,
-  password,
-  setPassword
-}) {
+import  { React, useState } from 'react'
 
-  const [showLoginForm, setShowLoginForm] = useState(false)
+export default function CreateLoginForm({ handleLogin, username, setUsername, password, setPassword }) {
 
-  function handleShowForm() {
-    setShowLoginForm(!showLoginForm)
+  const [showPassword, setShowPassword] = useState(false)
+
+  function handleShowPassword() {
+    setShowPassword(!showPassword)
   }
 
-  function showForm() {
-    if(showLoginForm) {
-      return <div><form className="login-form" onSubmit={handleLogin}>
-        <div>
-       Username <input value={username} required name="username-input" id="username-input" type="text" onChange={({
-            target
-          }) => setUsername(target.value)}></input>
-        </div>
-        <div>
-       Password <input value={password} required name="password-input" id="password-input" type="password" onChange={({
+  const passwordInput = showPassword === false ? <div>
+  Password <input value={password} required name="password-input" id="password-input" type="password" onChange={({
+       target
+     }) => setPassword(target.value)}></input>
+   </div> : <div>
+       Password <input value={password} required name="password-input" id="password-input" type="text" onChange={({
             target
           }) => setPassword(target.value)}></input>
         </div>
+
+    return <div><form className="login-form" onSubmit={handleLogin}>
         <div>
-          <button type="submit">Login</button>
+          <h1>Log in page</h1>
+       Username <input value={username} minLength={3} maxLength={30} required name="username-input" id="username-input" type="text" onChange={({
+            target
+          }) => setUsername(target.value)}></input>
         </div>
+        {passwordInput}
+        <div>
+        Show password: <input type="checkbox" id="show-password-checkbox" name="show-password-checkbox" value={showPassword} onChange={handleShowPassword}></input>
+        </div>
+        <div><button type="submit">Login</button></div>
       </form>
-      <button onClick={handleShowForm}>Cancel</button>
-      </div>
-    } else {
-      return <button onClick={handleShowForm}>Log in</button>
-    }
-
+       </div>
   }
-
-  return showForm()
-}

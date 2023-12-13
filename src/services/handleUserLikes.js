@@ -10,15 +10,15 @@ const setToken = newToken => {
 
 // retrieve user's liked posts.
 const getLikedPosts = async userId => {
+
   try {
+
     id = userId.username
     const baseUrl = `http://localhost:3003/api/users/${id}/likes`
 
-    console.log('getLikedPosts service, userId: ', id)
     const response = await axios.get(baseUrl)
-
-    console.log(response.data)
     return response.data
+
   } catch (err) {
     console.log(err)
   }
@@ -39,7 +39,6 @@ const handleLikeDislike = async (blog, type) => {
 
     try {
       const response = await axios.put(baseUrl, newBlog, config)
-      console.log(response.data)
       return response.data
 
     } catch (err) {
@@ -51,7 +50,6 @@ const handleLikeDislike = async (blog, type) => {
 
   try {
     const response = await axios.put(baseUrl, newBlog, config)
-    console.log(response.data)
     return response.data
 
   } catch (err) {

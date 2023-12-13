@@ -1,7 +1,8 @@
 import { React, useState } from 'react'
 import blogService from '../services/handleBlogs'
 import { NotificationError, NotificationSuccess } from './Notification'
-export default function AddBlog({ updateUserPageState }) {
+export default function AddBlog({ updateUserPageState, user }) {
+
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -37,19 +38,22 @@ export default function AddBlog({ updateUserPageState }) {
     title: title,
     author: author,
     url: url,
-    likes: likes
+    likes: likes,
   }
 
   async function handleBlogSubmit(e) {
+
     e.preventDefault()
     resetOurForm()
+
     try {
       const result = await blogService.addBlog(blogObject)
-      showSuccessNotification('Blog added successfully.')
 
       updateUserPageState(result.data) // updates the state of our user and explore data with new post. addBlogForm -> App.jsx
+      console.log('New blog posted by: ', user.username)
 
       setShowBlogForm(!showBlogForm)
+      showSuccessNotification('Blog added successfully.')
       return result.data
 
     } catch(error) {
@@ -72,17 +76,17 @@ export default function AddBlog({ updateUserPageState }) {
           <h2>Save a new blog</h2>
           <form onSubmit={handleBlogSubmit}>
             <div>
-            Title: <input type="text" name="title-input" required value={title} onChange={({
+            Title: <input type="text" name="title-input" minLength={5} maxLength={60} required value={title} onChange={({
                 target
               }) => setTitle(target.value)}></input>
             </div>
             <div>
-            Author: <input type="text" name="author-input" required value={author} onChange={({
+            Author: <input type="text" name="author-input" minLength={5} maxLength={60} required value={author} onChange={({
                 target
               }) => setAuthor(target.value)}></input>
             </div>
             <div>
-            URL: <input type="text" name="url-input" required value={url} onChange={({
+            URL: <input type="text" name="url-input" minLength={5} maxLength={100} required value={url} onChange={({
                 target
               }) => setUrl(target.value)}></input>
             </div>
@@ -99,7 +103,11 @@ export default function AddBlog({ updateUserPageState }) {
         </>
       )
     } else {
-      return <button onClick={handleShowPostBlogForm}>Post new blog</button>
+      return <>
+          <NotificationError message={notificationError} />
+          <NotificationSuccess message={notificationSuccess} />
+          <button onClick={handleShowPostBlogForm}>Post new blog</button>
+            </>
     }
   }
   return showPostBlogForm()

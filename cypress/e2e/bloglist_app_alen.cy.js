@@ -1,29 +1,30 @@
 /* eslint-disable */
 describe('Blog posting app', () => {
 
-  beforeEach(function() {
-    cy.visit('http://localhost:5173/')
- })
+  const baseUrl = 'http://localhost:5173'
 
   it('Front page is rendered and contains a blog', function()  {
+    cy.visit(`${baseUrl}/blogs`)
     cy.contains('Random Blog 1')
   })
 
-  it('Login form can be opened and then closed', function() {
+  it('We can attempt to login', function() {
+    cy.visit(`${baseUrl}/login`)
     cy.contains('Log in').click()
-    cy.contains('Cancel').click()
   })
   // needs to be completed
   it('User can login successfully', function() {
+    cy.visit(`${baseUrl}/login`)
     cy.contains('Log in').click()
     cy.get('#username-input').type('testingusername1') // an element with an id of username
     cy.get('#password-input').type('testingpassword1')
     cy.contains('Login').click()
 
-    cy.contains('testingname1 is logged in')
+    cy.contains('Logged in as testingname1')
   })
 
   it.only('Login fails with the wrong password provided', function() {
+    cy.visit(`${baseUrl}/login`)
     cy.contains('Log in').click()
     cy.get('#username-input').type('testingusername1')
     cy.get('#password-input').type('wrongpassword')

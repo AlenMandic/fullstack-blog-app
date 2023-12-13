@@ -1,6 +1,6 @@
 import './style.css'
 import { useState, useEffect } from 'react'
-import loginService from './services/handleLogin'
+import loginService from './services/handleSignUpLogin'
 import blogService from './services/handleBlogs'
 import userLikesService from './services/handleUserLikes'
 import AddBlog from './components/AddBlogForm'
@@ -8,7 +8,11 @@ import CreateLoginForm from './components/CreateLoginForm'
 import UserBlog from './components/UserBlog'
 import { NotificationError, NotificationSuccess, } from './components/Notification'
 import ExplorePage from './components/ExplorePage'
+import UsersPage from './components/UsersPage'
+import UserPage from './components/UserPage'
 import CreateSignUpForm from './components/CreateSignupForm'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import detectLogoutService from './services/utils'
 
 export default function App() {
 
@@ -20,7 +24,6 @@ export default function App() {
   const [notificationSuccess, setNotificationSuccess] = useState(null)
   const [explorePageState, setExplorePageState] = useState([])
   const [showUserPosts, setShowUserPosts] = useState(true)
-  const [userLikedPosts, setUserLikedPosts] = useState([])
 
   // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm, this gets updated, and then finally ExplorePage.
   useEffect(() => {
@@ -48,16 +51,14 @@ export default function App() {
     }
   }, [])
 
-  //If user is logged in, we render their posts and initial liked posts. This needs to only run once when the initial login happens.
+  // If user is logged in, we render their blog posts.
   useEffect(() => {
     if (user) {
       const fetchUserBlogs = async () => {
         try {
           const blogs = await blogService.getUserBlogs(user)
-          const userLikedPosts = await userLikesService.getLikedPosts(user)
-
           setUserBlogs(blogs)
-          setUserLikedPosts(userLikedPosts)
+
         } catch (err) {
           console.log(err)
           showErrorNotification(err.message)
@@ -65,6 +66,17 @@ export default function App() {
       }
       fetchUserBlogs()
     }
+  }, [user])
+
+  // automatic inactivity/logout detection service which starts upon login.
+  useEffect(() => {
+
+    if(user) {
+      const cleanUpListeners = detectLogoutService(handleLogout)
+
+      return cleanUpListeners
+    }
+
   }, [user])
 
   function resetForm() {
@@ -91,23 +103,7 @@ export default function App() {
     }, 5000)
   }
 
-  function createLoginForm() {
-    return (
-      <CreateLoginForm
-        handleLogin={handleLogin}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-      />
-    )
-  }
-  // returns the form for adding blogs. Whenever a blog is added, App.jsx receives the data so we can update states.
-  function addBlog() {
-    return <AddBlog updateUserPageState={handleBlogSubmitCallback}/>
-  }
-
-  // updates USER and EXPLORE page state when a user adds a new post from addBlogForm.jsx
+  // updates Homepage and Explore page state when a user adds a new post from addBlogForm.jsx
   function handleBlogSubmitCallback(blogObject) {
     const oldUserBlogs = blogs
     const oldExploreBlogs = explorePageState
@@ -124,12 +120,14 @@ export default function App() {
 
       window.localStorage.setItem('loggedInBlogAppUser', JSON.stringify(user))
       setUser(user)
-      blogService.setToken(user.token) // changes the private "token" variable in our services to current auth-user token, enabling our services to use the token for requests. These requests will also need an 'Authorization' header with the token sent with them.
+      blogService.setToken(user.token)
+      userLikesService.setToken(user.token)
       setUsername('')
       setPassword('')
       showSuccessNotification('Logged in successfully.')
+
     } catch (err) {
-      showErrorNotification('Login failed. Verify login details')
+      showErrorNotification('Login failed. Verify login details.')
       console.log(err)
       resetForm()
     }
@@ -157,10 +155,10 @@ export default function App() {
 
   function handleLogout() {
     setUser(null)
-    setUserLikedPosts([])
     blogService.setToken(null)
     userLikesService.setToken(null)
     resetForm()
+    console.log('User logged out.')
   }
 
   function handleUserPosts() {
@@ -184,18 +182,44 @@ export default function App() {
     <>
       <NotificationError message={notificationError} />
       <NotificationSuccess message={notificationSuccess} />
-      <h1>Blog sharing app</h1>
-      <h3>Save your favorite blogs and their details to never lose them again!</h3>
-      {user && (<h2>Logged in as {user.name}</h2>)}
-      {!user && createLoginForm()}
-      {!user && <CreateSignUpForm />}
-      {user && <button onClick={handleLogout}>Log out</button>}
-      {user && (<div>{addBlog()}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
-      <h1>Front Page</h1>
-      <h3>Explore blogs posted by others and interact with them.</h3>
-      <ExplorePage explorePageState={explorePageState} user={user} userLikedBlogs={userLikedPosts}/>
+
+      <Router>
+       <div>
+        <Link style={{ padding: '10px' }} to="/">Home</Link>
+        <Link style={{ padding: '10px' }} to="/blogs">Front Page</Link>
+        <Link style={{ padding: '10px' }} to="/users">Users</Link>
+        {!user && <Link style={{ padding: '10px' }} to="/login">Log in</Link>}
+        {!user && <Link style={{ padding: '10px' }} to="/register">Create account</Link>}
+        {user && <button onClick={handleLogout}>Log out</button>}
+        {user && (<h2>Logged in as {user.name}</h2>)}
+       </div>
+
+        <Routes>
+
+          <Route path="/" element={
+           <>
+           <h1>Welcome to SnapBlog, a blog sharing site!</h1>
+           <h3>Share and save your favorite blog posts with others.</h3>
+            {!user && <div><p>Log in to post new blogs or view your saved blogs right here.</p></div>}
+            {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
+             <Link style={{ padding: '5px' }} to="/blogs">View blogs posted by others</Link></>}/>
+
+          <Route path="/blogs" element={<ExplorePage explorePageState={explorePageState} user={user}/>}/>
+
+          <Route path="/users" element={<UsersPage />}/>
+
+          <Route path="/users/:userId" element={<UserPage user={user} />}/>
+
+          <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}/>
+
+          <Route path="/register" element={<CreateSignUpForm />}/>
+
+        </Routes>
+
+      </Router>
+
       <footer>
-      <h3>Thanks for browsing through our site. We hope you enjoyed your stay! 😄</h3>
+      <h3>Thanks for browsing through SnapBlog. We hope you enjoyed your stay and found interesting blogs! 😄</h3>
       </footer>
     </>
   )
