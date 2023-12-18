@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import userService from '../services/handleUsers'
 import { Link } from 'react-router-dom'
+import { List, ListItemButton, ListItemText } from '@mui/material'
 
 export default function UsersPage() {
 
@@ -23,12 +24,13 @@ useEffect(() => {
 
 }, [])
 
-const ourUsers = <ul>
-    {users.map(user => (
-        // eslint-disable-next-line quotes
-        <li key={user.id}><Link to={`/users/${user.id}`}>{user.name}</Link></li>
-    ))}
-</ul>
+const ourUsers = <List>
+{users.map((user) => (
+  <ListItemButton key={user.id} component={Link} to={`/users/${user.id}`} sx={{ textDecoration: 'none', color: '#2196F3' }}>
+    <ListItemText primary={user.name} />
+  </ListItemButton>
+))}
+</List>
 
     return (
     <>

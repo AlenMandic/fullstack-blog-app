@@ -1,3 +1,10 @@
+// Material UI imports.
+import Container from '@mui/material/Container'
+import ResponsiveHeader from './mui-components/Header'
+import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert'
+
+// Regular imports
 import './style.css'
 import { useState, useEffect } from 'react'
 import loginService from './services/handleSignUpLogin'
@@ -25,7 +32,7 @@ export default function App() {
   const [explorePageState, setExplorePageState] = useState([])
   const [showUserPosts, setShowUserPosts] = useState(true)
 
-  // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm, this gets updated, and then finally ExplorePage.
+  // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm,, this get's updated.
   useEffect(() => {
     const createExplorePage = async () => {
       try {
@@ -36,6 +43,7 @@ export default function App() {
         console.error('error fetching initial blogs for explore page: ', err)
       }
     }
+
     createExplorePage()
   }, [])
 
@@ -116,7 +124,7 @@ export default function App() {
     e.preventDefault()
 
     try {
-      const user = await loginService.login({ username, password }) // should return user: username, name, token
+      const user = await loginService.login({ username, password }) // should return user: username, name, id, token
 
       window.localStorage.setItem('loggedInBlogAppUser', JSON.stringify(user))
       setUser(user)
@@ -180,18 +188,14 @@ export default function App() {
 
   return (
     <>
+      <Container>
       <NotificationError message={notificationError} />
       <NotificationSuccess message={notificationSuccess} />
 
       <Router>
        <div>
-        <Link style={{ padding: '10px' }} to="/">Home</Link>
-        <Link style={{ padding: '10px' }} to="/blogs">Front Page</Link>
-        <Link style={{ padding: '10px' }} to="/users">Users</Link>
-        {!user && <Link style={{ padding: '10px' }} to="/login">Log in</Link>}
-        {!user && <Link style={{ padding: '10px' }} to="/register">Create account</Link>}
-        {user && <button onClick={handleLogout}>Log out</button>}
-        {user && (<h2>Logged in as {user.name}</h2>)}
+       <ResponsiveHeader user={user} handleLogout={handleLogout} />
+        {user && (<Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white' }}>Logged in as {user.name}</Alert>)}
        </div>
 
         <Routes>
@@ -200,9 +204,12 @@ export default function App() {
            <>
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
            <h3>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><p>Log in to post new blogs or view your saved blogs right here.</p></div>}
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white' }}>Log in to see all of your blog posts right here!</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
-             <Link style={{ padding: '5px' }} to="/blogs">View blogs posted by others</Link></>}/>
+             <Link to="/blogs">
+              <Typography variant="h5" sx={{ my: '25px' }}>Browse through blog posts</Typography>
+              </Link></>}
+             />
 
           <Route path="/blogs" element={<ExplorePage explorePageState={explorePageState} user={user}/>}/>
 
@@ -210,9 +217,9 @@ export default function App() {
 
           <Route path="/users/:userId" element={<UserPage user={user} />}/>
 
-          <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}/>
+          <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} />}/>
 
-          <Route path="/register" element={<CreateSignUpForm />}/>
+          <Route path="/register" element={<CreateSignUpForm user={user} />}/>
 
         </Routes>
 
@@ -221,6 +228,8 @@ export default function App() {
       <footer>
       <h3>Thanks for browsing through SnapBlog. We hope you enjoyed your stay and found interesting blogs! 😄</h3>
       </footer>
+      </Container>
+
     </>
   )
 }

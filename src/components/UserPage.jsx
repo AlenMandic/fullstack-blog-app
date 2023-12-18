@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import getUserProfileService from '../services/handleUsers'
 import ExploreBlog from './ExploreBlog'
+import Alert from '@mui/material/Alert'
 
 export default function UserPage({ user, userLikedBlogs }) {
 
@@ -43,6 +44,7 @@ export default function UserPage({ user, userLikedBlogs }) {
 
     const errorPage = (
         <div className="errorPage">
+        <Alert severity="error">Ooops. That page is in another castle.</Alert>
         <h1>🛠️ Something went wrong. Ensure the user profile you are looking for exists.</h1>
         </div>
     )
@@ -50,6 +52,7 @@ export default function UserPage({ user, userLikedBlogs }) {
     const userPage =  (
         <div className="userPage">
         <h1>Welcome to {currentUserProfile.name}{'\''}s profile</h1>
+        <h2>Blogs posted:</h2>
         </div>
     )
 
