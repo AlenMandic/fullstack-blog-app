@@ -21,7 +21,7 @@ export function NotificationError({ message }) {
   }
 
   return (
-    <Alert severity="error" sx={{ mt: '75px' }}>
+    <Alert severity="error" sx={{ backgroundColor: '#480111', color: '#fff', border: '1px solid #6c757d', mt: '75px' }}>
       <AlertTitle>Error</AlertTitle>
       {message}
     </Alert>

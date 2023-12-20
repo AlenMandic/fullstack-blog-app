@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import loginService from '../services/handleSignUpLogin'
 import { NotificationError, NotificationSuccess } from './Notification'
-import Alert from '@mui/material/Alert'
+import SignUp from '../mui-components/Sign-up'
 
 export default function CreateSignUpForm({ user }) {
 
@@ -12,7 +12,6 @@ export default function CreateSignUpForm({ user }) {
 
     const [notificationError, setNotificationError] = useState(null)
     const [notificationSuccess, setNotificationSuccess] = useState(null)
-
 
       function showErrorNotification(message) {
         setNotificationError(message)
@@ -37,7 +36,6 @@ export default function CreateSignUpForm({ user }) {
         setRepeatPassword('')
       }
 
-// ensure password is validated as in the backend, and that the user knows about it.
       async function handleSignUp(e) {
         e.preventDefault()
 
@@ -69,44 +67,9 @@ export default function CreateSignUpForm({ user }) {
          }
       }
 
-      const loggedIn = <h1>You are currently logged in and have an account.</h1>
-
-      const notLoggedIn = <div>
+    return <>
       <NotificationError message={notificationError} />
       <NotificationSuccess message={notificationSuccess} />
-      <h1>Create your SnapBlog account!</h1>
-          <form className="signup-form" onSubmit={handleSignUp}>
-          <div>
-         Username <input value={username} required minLength={3} maxLength={30} name="username-input" id="username-input" type="text" onChange={({
-              target
-            }) => setUsername(target.value)}></input>
-          </div>
-          <div>
-         Name <input value={name} name="name-input" required minLength={3} maxLength={30} id="name-input" type="text" onChange={({
-              target
-            }) => setName(target.value)}></input>
-          </div>
-          <div>
-         Password <input value={password} required minLength={15} maxLength={80} name="password-input" id="password-input" type="password" onChange={({
-              target
-            }) => setPassword(target.value)}></input>
-          </div>
-          <div>
-         Confirm password <input value={repeatPassword} minLength={15} maxLength={80} required name="rpassword-input" id="rpassword-input" type="password" onChange={({
-              target
-            }) => setRepeatPassword(target.value)}></input>
-          </div>
-          <div>
-          <Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white' }}>Password must be 15 characters or more; include atleast 1 capital letter, 1 number, and 1 special character!</Alert>
-          </div>
-        <div>
-            <button type="submit">Create account</button>
-          </div>
-        </form>
-        </div>
-
-          return <>
-          {user && loggedIn}
-          {!user && notLoggedIn}
-          </>
+      <SignUp user={user} setUsername={setUsername} username={username} name={name} setName={setName} password={password} setPassword={setPassword} repeatPassword={repeatPassword} setRepeatPassword={setRepeatPassword} handleSignUp={handleSignUp} />
+      </>
       }

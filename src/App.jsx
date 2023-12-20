@@ -1,6 +1,7 @@
 // Material UI imports.
 import Container from '@mui/material/Container'
 import ResponsiveHeader from './mui-components/Header'
+import StickyFooter from './mui-components/Footer'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
 
@@ -226,7 +227,7 @@ export default function App() {
       </Router>
 
       <footer>
-      <h3>Thanks for browsing through SnapBlog. We hope you enjoyed your stay and found interesting blogs! 😄</h3>
+      <StickyFooter />
       </footer>
       </Container>
 
