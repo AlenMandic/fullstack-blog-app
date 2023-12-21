@@ -21,7 +21,7 @@ import UsersPage from './components/UsersPage'
 import UserPage from './components/UserPage'
 import CreateSignUpForm from './components/CreateSignupForm'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import detectLogoutService from './services/utils'
+import detectLogoutService from './services/handleLogout'
 import UnknownRoute from './components/UnknownRoute'
 
 export default function App() {
