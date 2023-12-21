@@ -1,5 +1,6 @@
 import { useState, useEffect, React } from 'react'
 import ExploreBlog from './ExploreBlog'
+import BasicSelect from '../mui-components/SelectMenu'
 
 // Returns all blogs and who they belong to. IF someone is logged in, they can like the blog, increasing it's like counter by 1. Implementing infinite scrolling here would be great.
 export default function ExplorePage({
@@ -60,13 +61,7 @@ export default function ExplorePage({
     <div>
       <h1>Front Page</h1>
       <h3>Explore blogs posted by others and interact with them.</h3>
-      <label>
-        Sort by:
-        <select value={sorting} onChange={(e) => setSorting(e.target.value)} name="sort-by">
-          <option value="default">Default</option>
-          <option value="likes">Highest Likes</option>
-        </select>
-      </label>
+      <BasicSelect sorting={sorting} setSorting={setSorting} />
       {returnSortedPage}
     </div>
   )

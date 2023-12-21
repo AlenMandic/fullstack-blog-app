@@ -22,6 +22,7 @@ import UserPage from './components/UserPage'
 import CreateSignUpForm from './components/CreateSignupForm'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import detectLogoutService from './services/utils'
+import UnknownRoute from './components/UnknownRoute'
 
 export default function App() {
 
@@ -223,6 +224,8 @@ export default function App() {
           <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} />}/>
 
           <Route path="/register" element={<CreateSignUpForm user={user} />}/>
+
+          <Route path="*" element={<UnknownRoute />} />
 
         </Routes>
 

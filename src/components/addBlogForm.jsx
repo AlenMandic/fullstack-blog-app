@@ -74,7 +74,7 @@ export default function AddBlog({ updateUserPageState, user }) {
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
           {' '}
-          <Typography variant="h5">Save a new blog</Typography>
+          <Typography variant="h5">Post a new blog</Typography>
           <form onSubmit={handleBlogSubmit}>
             <div>
             <TextField variant="filled" label="Title" type="text" name="title-input"  required value={title} onChange={({
@@ -107,7 +107,7 @@ export default function AddBlog({ updateUserPageState, user }) {
               }}></TextField>
             </div>
             <div>
-            <TextField variant="filled" label="Likes" type="number" name="likes-input"  required value={likes} onChange={({
+            <TextField variant="filled" label="Likes" type="number" name="likes-input" value={likes} onChange={({
                 target
               }) => setLikes(target.value)}
                style={{ background: 'white', margin: '10px' }}
@@ -117,7 +117,7 @@ export default function AddBlog({ updateUserPageState, user }) {
               }}></TextField>
             </div>
             <div>
-              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px' }}>Save</Button>
+              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px' }}>Post</Button>
             </div>
           </form>
           <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600' }}>Cancel</Button>

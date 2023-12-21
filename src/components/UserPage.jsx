@@ -18,7 +18,7 @@ export default function UserPage({ user, userLikedBlogs }) {
 
            try {
              const response = await getUserProfileService.getIndividualUser(userId)
-             console.log(response)
+             console.log(response.data)
 
              if(response === 400 || response === 404) {
                 setShowErrorPage(true)
@@ -45,13 +45,28 @@ export default function UserPage({ user, userLikedBlogs }) {
     const errorPage = (
         <div className="errorPage">
         <Alert severity="error">Ooops. That page is in another castle.</Alert>
-        <h1>🛠️ Something went wrong. Ensure the user profile you are looking for exists.</h1>
+        <h1 style={{ marginTop: '70px' }}>🛠️ Something went wrong. Ensure the user profile you are looking for exists.</h1>
         </div>
     )
+
+    function getTotalLikes() {
+
+        const getLikesArray = currentUserBlogs.map(blog => blog.likes)
+        const sumTotalLikes = getLikesArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+
+        const likesElement = (
+            <div>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>Total likes: <p style={{ color: '#6b6bbb' }}>{sumTotalLikes}</p></h1>
+            </div>
+        )
+
+        return likesElement
+    }
 
     const userPage =  (
         <div className="userPage">
         <h1>Welcome to {currentUserProfile.name}{'\''}s profile</h1>
+        {getTotalLikes()}
         <h2>Blogs posted:</h2>
         </div>
     )
