@@ -4,8 +4,6 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -19,7 +17,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        SnapBlog
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -32,10 +30,10 @@ const defaultTheme = createTheme()
 
 export default function SignUp({ user, username, setUsername, name, setName, password, setPassword, repeatPassword, setRepeatPassword, handleSignUp }) {
 
-  const loggedIn = <Typography variant="h3">You are already logged in and have an account.</Typography>
+  const loggedIn = <Typography variant="h3" sx={{ mt: '55px' }}>You are already logged in and have an account.</Typography>
 
   const notLoggedIn = <ThemeProvider theme={defaultTheme}>
-  <Container component="main" maxWidth="xs">
+  <Container component="main" maxWidth="xs" sx={{ backgroundColor: 'white', color: 'black', borderRadius: '8px' }}>
     <CssBaseline />
     <Box
       sx={{

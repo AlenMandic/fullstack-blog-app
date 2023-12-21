@@ -26,7 +26,9 @@ useEffect(() => {
 
 const ourUsers = <List>
 {users.map((user) => (
-  <ListItemButton key={user.id} component={Link} to={`/users/${user.id}`} sx={{ textDecoration: 'none', color: '#2196F3' }}>
+  <ListItemButton key={user.id} component={Link} to={`/users/${user.id}`} sx={{ textDecoration: 'none', color: '#2196F3', '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  }, }}>
     <ListItemText primary={user.name} />
   </ListItemButton>
 ))}

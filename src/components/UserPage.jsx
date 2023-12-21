@@ -61,7 +61,7 @@ export default function UserPage({ user, userLikedBlogs }) {
     return (
         <>
         {renderUserProfile}
-        {!(showErrorPage) && userBlogs.length === 0 ? <h2>{currentUserProfile.name} has not posted any blogs yet!</h2> : userBlogs}
+        {!(showErrorPage) && userBlogs.length === 0 ? <h2 style={{ marginTop: '100px' }}>{currentUserProfile.name} has not posted any blogs yet!</h2> : userBlogs}
         </>
     )
 }

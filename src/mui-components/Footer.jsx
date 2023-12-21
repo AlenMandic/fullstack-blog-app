@@ -11,10 +11,10 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn'
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="white">
+    <Typography variant="body2" color="black">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/" target='_blank'>
-        Your Website, Alen Mandic
+        SnapBlog, Alen Mandic
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,8 +30,10 @@ export default function StickyFooter() {
     <ThemeProvider theme={defaultTheme}>
       <Box
         sx={{
+          mt: '100px',
           display: 'flex',
-          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <CssBaseline />
@@ -40,24 +42,27 @@ export default function StickyFooter() {
           sx={{
             py: 3,
             px: 2,
-            mt: '100px',
-            color: 'white',
-            backgroundColor: '#585858'
+            color: 'black',
+            borderRadius: '4px',
+            backgroundColor: 'white',
+            width: '100%',
           }}
         >
-          <Container maxWidth="sm">
-            <Typography variant="body1" sx={{ fontSize: '14px' }}>We hope you enjoyed your stay and found interesting blogs! 😄</Typography>
+          <Container component="main" maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Typography variant="body1">Contact me:</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <IconButton>
-        <Link href="https://github.com" target="_blank" rel="noopener noreferrer" color="inherit" sx={{ ml: '30px' }}>
-          <GitHubIcon sx={{ width: '40px', height: '40px' }} />
+        <Link href="https://github.com" target="_blank" rel="noopener noreferrer" color="inherit">
+          <GitHubIcon sx={{ width: '40px', height: '40px', color: 'black' }} />
         </Link>
       </IconButton>
 
       <IconButton>
-        <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" color="inherit" sx={{ ml: '30px' }}>
-          <LinkedInIcon sx={{ width: '40px', height: '40px' }} />
+        <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" color="inherit">
+          <LinkedInIcon sx={{ width: '40px', height: '40px', color: 'black' }} />
         </Link>
       </IconButton>
+            </Box>
             <Copyright />
           </Container>
         </Box>

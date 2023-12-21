@@ -14,7 +14,6 @@ import HomeIcon from '@mui/icons-material/Home'
 import { Link } from 'react-router-dom'
 
 const drawerWidth = 240
-const navItems = ['Home', 'About', 'Contact']
 
 function ResponsiveHeader(props) {
 
@@ -38,33 +37,33 @@ function ResponsiveHeader(props) {
       </Typography>
       <Divider />
       <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
+           <Button sx={{ fontSize: '16px', color: 'blue' }}>
             <HomeIcon />
            </Button>
           </Link>
           <Divider />
           <Link to="/blogs" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
+           <Button sx={{ fontSize: '16px', color: 'blue' }}>
             Front Page
            </Button>
           </Link>
           <Divider />
           <Link to="/users" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
+           <Button sx={{ fontSize: '16px', color: 'blue' }}>
             Users
            </Button>
           </Link>
           <Divider />
-    {!user && <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
-            Log In
+    {user && <Button  sx={{ color: 'black', fontSize: '16px' }} onClick={handleLogOutCallback}>Log Out</Button>}
+    {!user && <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
+           <Button sx={{ fontSize: '16px', color: 'blue' }}>
+            Create Account
            </Button>
           </Link>}
           <Divider />
-    {user && <Button  sx={{ color: 'black', fontSize: '16px' }} onClick={handleLogOutCallback}>Log Out</Button>}
-    {!user && <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
-            Create Account
+          {!user && <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
+           <Button sx={{ fontSize: '16px', color: 'blue' }}>
+            Log In
            </Button>
           </Link>}
           <Divider />
@@ -83,42 +82,55 @@ function ResponsiveHeader(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' }, color: 'black' }}
+            sx={{ mr: 2, display: { md: 'none' }, color: 'black' }}
           >
             <MenuIcon />
           </IconButton>
           <Typography
             variant="h4"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', color: 'black' } }}
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'block', color: 'black' } }}
           >
             SnapBlog 📝
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
+           <Button sx={{ fontSize: '16px', '&:hover': {
+    backgroundColor: 'black',
+  }, color: 'blue',  }}>
             <HomeIcon />
            </Button>
           </Link>
           <Link to="/blogs" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
+           <Button sx={{ fontSize: '16px', '&:hover': {
+    backgroundColor: 'black',
+  }, color: 'blue',  }}>
             Front Page
            </Button>
           </Link>
           <Link to="/users" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
+           <Button sx={{ fontSize: '16px', '&:hover': {
+    backgroundColor: 'black',
+  }, color: 'blue',  }}>
             Users
            </Button>
           </Link>
-    {!user && <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
-            Log In
+    {user && <Button  sx={{ color: 'black', fontSize: '16px', '&:hover': {
+    backgroundColor: 'black',
+    color: 'white'
+  }, }} onClick={handleLogOutCallback}>Log Out</Button>}
+    {!user && <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
+           <Button sx={{ fontSize: '16px', '&:hover': {
+    backgroundColor: 'black',
+  }, color: 'blue',  }}>
+            Create Account
            </Button>
           </Link>}
-    {user && <Button  sx={{ color: 'black', fontSize: '16px' }} onClick={handleLogOutCallback}>Log Out</Button>}
-    {!user && <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px' }}>
-            Create Account
+          {!user && <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
+           <Button sx={{ fontSize: '16px', '&:hover': {
+    backgroundColor: 'black',
+  }, color: 'blue',  }}>
+            Log In
            </Button>
           </Link>}
 </Box>
@@ -134,7 +146,7 @@ function ResponsiveHeader(props) {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >

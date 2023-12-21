@@ -18,7 +18,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        SnapBlog
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,7 +30,7 @@ const defaultTheme = createTheme()
 
 export default function SignInSide({ username, setUsername, password, setPassword, showPassword, handleShowPassword, handleLogin, user }) {
 
-    const loggedIn = <Typography variant="h2">You are currently logged in.</Typography>
+    const loggedIn = <Typography variant="h2" sx={{ mt: '55px' }}>You are currently logged in.</Typography>
     const notLoggedIn = <ThemeProvider theme={defaultTheme}>
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
@@ -46,9 +46,10 @@ export default function SignInSide({ username, setUsername, password, setPasswor
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          borderRadius: '4px',
         }}
       />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ borderRadius: '4px' }}>
         <Box
           sx={{
             my: 8,
@@ -124,7 +125,6 @@ export default function SignInSide({ username, setUsername, password, setPasswor
 
   return (
     <>
-    <Typography variant="h4" sx={{ m: '50px' }}>Welcome to your login page.</Typography>
      {!user && notLoggedIn}
      {user && loggedIn}
     </>

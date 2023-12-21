@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import blogService from '../services/handleBlogs'
 import { NotificationError, NotificationSuccess } from './Notification'
+import { Button, TextField, Box, Typography } from '@mui/material'
 export default function AddBlog({ updateUserPageState, user }) {
 
   const [title, setTitle] = useState('')
@@ -73,40 +74,60 @@ export default function AddBlog({ updateUserPageState, user }) {
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
           {' '}
-          <h2>Save a new blog</h2>
+          <Typography variant="h5">Save a new blog</Typography>
           <form onSubmit={handleBlogSubmit}>
             <div>
-            Title: <input type="text" name="title-input" minLength={5} maxLength={60} required value={title} onChange={({
+            <TextField variant="filled" label="Title" type="text" name="title-input"  required value={title} onChange={({
                 target
-              }) => setTitle(target.value)}></input>
+              }) => setTitle(target.value)}
+               style={{ background: 'white', margin: '10px', borderRadius: '4px' }}
+                inputProps={{
+                minLength: '5',
+                 maxLength: '60',
+              }}></TextField>
             </div>
             <div>
-            Author: <input type="text" name="author-input" minLength={5} maxLength={60} required value={author} onChange={({
+            <TextField variant="filled" label="Author" type="text" name="author-input"  required value={author} onChange={({
                 target
-              }) => setAuthor(target.value)}></input>
+              }) => setAuthor(target.value)}
+               style={{ background: 'white', margin: '10px' }}
+                inputProps={{
+                minLength: '5',
+                 maxLength: '60'
+              }}></TextField>
             </div>
             <div>
-            URL: <input type="text" name="url-input" minLength={5} maxLength={100} required value={url} onChange={({
+            <TextField variant="filled" label="URL" type="text" name="url-input"  required value={url} onChange={({
                 target
-              }) => setUrl(target.value)}></input>
+              }) => setUrl(target.value)}
+               style={{ background: 'white', margin: '10px' }}
+                inputProps={{
+                minLength: '5',
+                 maxLength: '100'
+              }}></TextField>
             </div>
             <div>
-            Likes: <input type="number" name="likes-input" required value={likes} onChange={({
+            <TextField variant="filled" label="Likes" type="number" name="likes-input"  required value={likes} onChange={({
                 target
-              }) => setLikes(target.value)}></input>
+              }) => setLikes(target.value)}
+               style={{ background: 'white', margin: '10px' }}
+                inputProps={{
+                minLength: '5',
+                 maxLength: '60'
+              }}></TextField>
             </div>
             <div>
-              <button type="submit">Save</button>
+              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px' }}>Save</Button>
             </div>
           </form>
-          <button onClick={handleShowPostBlogForm}>Hide</button>
+          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600' }}>Cancel</Button>
         </>
       )
     } else {
       return <>
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
-          <button onClick={handleShowPostBlogForm}>Post new blog</button>
+          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600' }}>Post a new blog</Button>
             </>
     }
   }

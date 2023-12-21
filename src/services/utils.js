@@ -36,13 +36,3 @@ document.addEventListener('keypress', resetLogoutTimer)
 }
 
 export default setUpLogOutListeners
-
-
-
-
-
-
-
-
-
-

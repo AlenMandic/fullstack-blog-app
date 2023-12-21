@@ -1,9 +1,10 @@
-// Material UI imports.
+// Material UI imports
 import Container from '@mui/material/Container'
 import ResponsiveHeader from './mui-components/Header'
 import StickyFooter from './mui-components/Footer'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
+import { Button } from '@mui/material'
 
 // Regular imports
 import './style.css'
@@ -143,7 +144,7 @@ export default function App() {
   }
   // updates user blogs and the explore page when a user deletes one of his blogs.
   async function handleDelete(ourBlog) {
-    const confirm = window.confirm(`Are you sure you want to delete ${ourBlog.title}`)
+    const confirm = window.confirm(`Are you sure you want to delete "${ourBlog.title}"`)
 
     if(confirm) {
 
@@ -174,12 +175,12 @@ export default function App() {
     if(showUserPosts) {
       return (
         <div>
-          <button onClick={toggleUserPosts}>Hide posts</button>
+          <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600' }}>Hide posts</Button>
           <ul>{blogs.map((blog) => (<UserBlog key={blog.id} blogObject={blog} handleDeleteCallback={handleDelete}/>))}</ul>
         </div>
       )
     } else {
-      return <button onClick={toggleUserPosts}>Show your posts</button>
+      return <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600' }}>Show your posts</Button>
     }
   }
 
@@ -189,26 +190,27 @@ export default function App() {
 
   return (
     <>
-      <Container>
+      <Container sx={{ minHeight: '100vh', }}>
       <NotificationError message={notificationError} />
       <NotificationSuccess message={notificationSuccess} />
 
       <Router>
        <div>
        <ResponsiveHeader user={user} handleLogout={handleLogout} />
-        {user && (<Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white' }}>Logged in as {user.name}</Alert>)}
+        {user && (<Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white' }}>Logged in as <strong>{user.name}</strong></Alert>)}
        </div>
 
         <Routes>
 
           <Route path="/" element={
            <>
+
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
-           <h3>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white' }}>Log in to see all of your blog posts right here!</Alert></div>}
+           <h3 style={{ marginBottom: '76px' }}>Share and save your favorite blog posts with others.</h3>
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to see all of your blog posts right here!</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
              <Link to="/blogs">
-              <Typography variant="h5" sx={{ my: '25px' }}>Browse through blog posts</Typography>
+              <Typography variant="h5" sx={{ mt: '65px', color: 'white' }}>Browse through posted blog posts</Typography>
               </Link></>}
              />
 
@@ -226,9 +228,8 @@ export default function App() {
 
       </Router>
 
-      <footer>
       <StickyFooter />
-      </footer>
+
       </Container>
 
     </>
