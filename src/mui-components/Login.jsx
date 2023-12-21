@@ -65,16 +65,16 @@ export default function SignInSide({ username, setUsername, password, setPasswor
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }} autoComplete='login-form'>
           <TextField
-    label="Username"
+    label="Username."
     value={username}
     margin="normal"
     required
     fullWidth
     id="username-input"
     name="username-input"
-    autoComplete="username"
+    autoComplete="username-input4323424324"
     autoFocus
     inputProps={{
       minLength: 3,
@@ -85,13 +85,18 @@ export default function SignInSide({ username, setUsername, password, setPasswor
     }) => setUsername(target.value)}
   />
       <TextField
-      label="Password"
+      label="Password."
       value={password}
       margin="normal"
       required
       fullWidth
       id="password-input"
       name="password-input"
+      autoComplete='password-input536263243243'
+      inputProps={{
+        minLength: 15,
+        maxLength: 80,
+      }}
       type={showPassword ? 'text' : 'password'}
       onChange={({
           target

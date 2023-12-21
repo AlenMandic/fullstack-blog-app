@@ -48,16 +48,16 @@ export default function SignUp({ user, username, setUsername, name, setName, pas
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <Box component="form" onSubmit={handleSignUp} sx={{ mt: 3 }}>
+      <Box component="form" onSubmit={handleSignUp} sx={{ mt: 3 }} autoComplete='signup-form'>
         <Grid container spacing={2}>
         <Grid item xs={12}>
             <TextField
               required
               fullWidth
-              id="email"
+              id="signupUsername"
               label="Username"
-              name="username"
-              autoComplete="username"
+              name="signupUsername"
+              autoComplete="new-username"
               value={username}
               inputProps={{
                 minLength: 3,
@@ -72,10 +72,10 @@ export default function SignUp({ user, username, setUsername, name, setName, pas
             <TextField
               required
               fullWidth
-              id="name"
+              id="signUpname"
               label="Name"
-              name="name"
-              autoComplete="name"
+              name="signUpname"
+              autoComplete="new-name"
               value={name}
               inputProps={{
                 minLength: 3,
@@ -90,10 +90,11 @@ export default function SignUp({ user, username, setUsername, name, setName, pas
             <TextField
               required
               fullWidth
-              name="password"
+              name="signUp-password"
               label="Password"
               type="password"
-              id="password"
+              id="signUp-password"
+              autoComplete='new-password21351212315'
               value={password}
               inputProps={{
                 minLength: 15,
@@ -112,6 +113,7 @@ export default function SignUp({ user, username, setUsername, name, setName, pas
               label="Repeat password"
               type="password"
               id="repeatPassword"
+              autoComplete='new-repeatPassword'
               value={repeatPassword}
               inputProps={{
                 minLength: 15,

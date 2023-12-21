@@ -127,7 +127,7 @@ export default function AddBlog({ updateUserPageState, user }) {
       return <>
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
-          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600' }}>Post a new blog</Button>
+          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', width: '250px', marginBottom: '30px' }}>Post a new blog</Button>
             </>
     }
   }
