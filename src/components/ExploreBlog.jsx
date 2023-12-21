@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
-import { Link } from 'react-router-dom'
+import BlogPostCard from '../mui-components/ExploreBlog'
 
 export default function ExploreBlog({ blogObject, user, showPostedBy, enableLikeButton }) {
 
-  const [showFullBlogs, setShowFullBlogs] = useState(false)
   const [userLikedBlogs, setUserLikedBlogs] = useState([])
   const [isLiked, setIsLiked] = useState(() => {
     const isThisLiked = userLikedBlogs.includes(blogObject.id)
@@ -30,10 +29,6 @@ export default function ExploreBlog({ blogObject, user, showPostedBy, enableLike
 
     fetchUserLikedBlogs()
   }, [user, blogObject.id])
-
-  function handleShowBlogs() {
-    setShowFullBlogs(!showFullBlogs)
-  }
 
   async function handleBlogLike() {
     if (!user) {
@@ -61,36 +56,5 @@ export default function ExploreBlog({ blogObject, user, showPostedBy, enableLike
     return result.data
   }
 
-  function showLikeButton() {
-    if(!isLiked || user === null) {
-      return <button onClick={handleBlogLike}>Like</button>
-    }
-    return <button onClick={handleBlogDislike}>Unlike</button>
-  }
-
-  function renderBlogs() {
-    if(showFullBlogs) {
-      return (
-        <div className="full-blog">
-          <h2>{blogObject.title}</h2>
-          <h3>{blogObject.author}</h3>
-          <a href="https://old.reddit.com/" target="_blank" rel="noreferrer">{blogObject.url}</a>
-          <p>Likes: {blogObject.likes}</p>
-          {showPostedBy && <p>Posted by: <Link to={`/users/${blogObject.postedBy.id}`}>{blogObject.postedBy.username}</Link></p>}
-          {enableLikeButton && showLikeButton()}
-          <button onClick={handleShowBlogs}>Hide</button>
-        </div>
-      )
-    } else {
-      return (
-        <div className="half-blog">
-          <h2>{blogObject.title}: </h2>
-          <h2>{blogObject.author}</h2>
-          <button onClick={handleShowBlogs}>View more</button>
-        </div>
-      )
-    }
-  }
-
-  return renderBlogs()
+  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} enableLikeButton={enableLikeButton} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} />
 }

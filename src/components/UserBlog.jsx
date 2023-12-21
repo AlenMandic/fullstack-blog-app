@@ -1,38 +1,10 @@
-import { useState } from 'react'
+import UserPostCard from '../mui-components/UserBlog'
 
 export default function UserBlog({ blogObject, handleDeleteCallback }) {
-
-  const[showFullBlogs, setShowFullBlogs] = useState(false)
-
-  function handleShowBlogs() {
-    setShowFullBlogs(!showFullBlogs)
-  }
 
   function handleDelete() {
     handleDeleteCallback(blogObject)
   }
 
-  function renderBlogs() {
-    if(showFullBlogs) {
-      return (
-        <div className="full-blog">
-          <h2>{blogObject.title}</h2>
-          <h3>{blogObject.author}</h3>
-          <a href={blogObject.url} target="_blank" rel="noreferrer">{blogObject.url}</a>
-          <p>Likes: {blogObject.likes}</p>
-          <button onClick={handleDelete}>Delete blog</button>
-          <button onClick={handleShowBlogs}>Hide</button>
-        </div>
-      )
-    } else {
-      return (
-        <div className="half-blog">
-          <h2>{blogObject.title}:</h2>
-          <h2>{blogObject.author}</h2>
-          <button onClick={handleShowBlogs}>View more</button>
-        </div>
-      )
-    }
-  }
-  return renderBlogs()
+    return <UserPostCard blogObject={blogObject} handleDeleteCallback={handleDelete} />
 }

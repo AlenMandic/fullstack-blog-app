@@ -1,3 +1,16 @@
 *, *::before, *::after {
   font-weight: normal;
 }
+
+html {
+  background-color: black
+}
+
+body {
+  background-color: black
+}
+
+#root {
+  background-color: black;
+  color: white;
+}
