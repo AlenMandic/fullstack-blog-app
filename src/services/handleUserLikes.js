@@ -14,7 +14,7 @@ const getLikedPosts = async userId => {
   try {
 
     id = userId.username
-    const baseUrl = `http://localhost:3003/api/users/${id}/likes`
+    const baseUrl = `/users/${id}/likes`
 
     const response = await axios.get(baseUrl)
     return response.data
@@ -32,7 +32,7 @@ const handleLikeDislike = async (blog, type) => {
 
   const id = blog.id
   const newBlog = blog
-  const baseUrl = `http://localhost:3003/api/blogs/${id}`
+  const baseUrl = `/blogs/${id}`
 
   if(type === 'like') {
     newBlog.likes += 1

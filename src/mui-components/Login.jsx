@@ -116,7 +116,7 @@ export default function SignInSide({ username, setUsername, password, setPasswor
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="http://localhost:5173/register" variant="body2">
+                <Link href="/api/register" variant="body2">
                   {'Don\'t have an account? Sign Up'}
                 </Link>
               </Grid>

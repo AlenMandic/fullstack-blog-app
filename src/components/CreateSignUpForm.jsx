@@ -52,7 +52,6 @@ export default function CreateSignUpForm({ user }) {
 
          try {
           const response = await loginService.registerUser(newUser)
-          console.log(response.data)
 
           if(response.status === 201) {
             showSuccessNotification('Account created. You may now log in.')
@@ -62,7 +61,6 @@ export default function CreateSignUpForm({ user }) {
           return response
 
          } catch(err) {
-          console.log(err)
           showErrorNotification('An error occured while registering your account.')
          }
       }

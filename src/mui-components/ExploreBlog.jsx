@@ -65,7 +65,7 @@ const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, use
         </Typography>
 
         {showPostedBy && <Typography variant="p" color="textSecondary">
-        Posted by: <RouterLink to={`/users/${blogObject.postedBy.id}`}>{blogObject.postedBy.username}</RouterLink>
+        Posted by: <RouterLink to={`/api/users/${blogObject.postedBy.id}`}>{blogObject.postedBy.username}</RouterLink>
         </Typography>}
 
       </CardContent>

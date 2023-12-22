@@ -136,7 +136,7 @@ export default function SignUp({ user, username, setUsername, name, setName, pas
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="http://localhost:5173/login" variant="body2" sx={{ mr: '100px' }}>
+            <Link href="/api/login" variant="body2" sx={{ mr: '100px' }}>
               Already have an account? Sign in
             </Link>
           </Grid>

@@ -14,11 +14,10 @@ useEffect(() => {
     try {
         const response = await userService.getAllUsers()
         setUsers(response)
-        console.log(response)
         return response
 
     } catch(err) {
-        console.log(err)
+        alert(err.message)
     }
    }
 
@@ -28,7 +27,7 @@ useEffect(() => {
 
 const ourUsers = <List>
 {users.map((user) => (
-  <ListItemButton key={user.id} component={Link} to={`/users/${user.id}`} sx={{ textDecoration: 'none', color: '#2196F3', '&:hover': {
+  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', color: '#2196F3', '&:hover': {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   }, }}>
     <ListItemText primary={<Typography variant="subtitle2" component="div">

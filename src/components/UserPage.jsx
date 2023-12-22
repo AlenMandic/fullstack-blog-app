@@ -18,7 +18,6 @@ export default function UserPage({ user, userLikedBlogs }) {
 
            try {
              const response = await getUserProfileService.getIndividualUser(userId)
-             console.log(response.data)
 
              if(response === 400 || response === 404) {
                 setShowErrorPage(true)
@@ -31,7 +30,7 @@ export default function UserPage({ user, userLikedBlogs }) {
              return response.data
 
            } catch(err) {
-            console.log(err)
+            alert(err.message)
            }
         }
         getUserProfile()
