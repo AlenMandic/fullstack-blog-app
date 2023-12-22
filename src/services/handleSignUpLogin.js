@@ -1,12 +1,11 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/api/login'
-const baseUrlSignUp = 'http://localhost:3003/api/users'
+const baseUrl = '/login'
+const baseUrlSignUp = '/users'
 
 // attempt to register new user
 const registerUser = async credentials => {
   try {
     const response = await axios.post(baseUrlSignUp, credentials)
-    console.log(response)
     return response
   } catch(err) {
     console.log(err)

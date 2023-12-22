@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/api/blogs'
+const baseUrl = '/blogs'
 
 let token = null
 
@@ -45,7 +45,6 @@ const deleteBlog = async blogId => {
 
   try {
     const response = await axios.delete(url, config)
-    console.log(response)
     return response
 
   } catch(err) {
@@ -59,10 +58,8 @@ const getUserBlogs = async userInfo => {
     try {
       let userId
       userId = userInfo.username
-      console.log('userId in getUserBlogs service: ', userId)
 
-      let userBlogsUrl = `http://localhost:3003/api/users/${userId}/blogs`
-      console.log('userBlogsUrl in getUserBlogs service: ', userBlogsUrl)
+      let userBlogsUrl = `/users/${userId}/blogs`
 
       const response = await axios.get(userBlogsUrl)
 

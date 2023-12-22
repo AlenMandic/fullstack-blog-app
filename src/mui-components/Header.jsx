@@ -42,26 +42,26 @@ function ResponsiveHeader(props) {
            </Button>
           </Link>
           <Divider />
-          <Link to="/blogs" style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to="/api/blogs" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', color: 'blue' }}>
             Front Page
            </Button>
           </Link>
           <Divider />
-          <Link to="/users" style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to="/api/users" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', color: 'blue' }}>
             Users
            </Button>
           </Link>
           <Divider />
     {user && <Button  sx={{ color: 'black', fontSize: '16px' }} onClick={handleLogOutCallback}>Log Out</Button>}
-    {!user && <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
+    {!user && <Link to="/api/register" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', color: 'blue' }}>
             Create Account
            </Button>
           </Link>}
           <Divider />
-          {!user && <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
+          {!user && <Link to="/api/login" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', color: 'blue' }}>
             Log In
            </Button>
@@ -101,14 +101,14 @@ function ResponsiveHeader(props) {
             <HomeIcon />
            </Button>
           </Link>
-          <Link to="/blogs" style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to="/api/blogs" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
   }, color: 'blue',  }}>
             Front Page
            </Button>
           </Link>
-          <Link to="/users" style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to="/api/users" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
   }, color: 'blue',  }}>
@@ -119,14 +119,14 @@ function ResponsiveHeader(props) {
     backgroundColor: 'black',
     color: 'white'
   }, }} onClick={handleLogOutCallback}>Log Out</Button>}
-    {!user && <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
+    {!user && <Link to="/api/register" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
   }, color: 'blue',  }}>
             Create Account
            </Button>
           </Link>}
-          {!user && <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
+          {!user && <Link to="/api/login" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
   }, color: 'blue',  }}>

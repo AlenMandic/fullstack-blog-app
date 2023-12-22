@@ -36,7 +36,6 @@ export default function ExploreBlog({ blogObject, user, showPostedBy, enableLike
       return null
     }
 
-    console.log('Fire like service for: ', blogObject.id)
     setIsLiked(true)
 
     const result = await userLikeService.handleLikeDislike(blogObject, 'like')
@@ -49,7 +48,6 @@ export default function ExploreBlog({ blogObject, user, showPostedBy, enableLike
       return null
     }
 
-    console.log('Fire dislike service for: ', blogObject.id)
     setIsLiked(false)
 
     const result = await userLikeService.handleLikeDislike(blogObject, 'dislike')

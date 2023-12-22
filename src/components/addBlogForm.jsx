@@ -51,14 +51,12 @@ export default function AddBlog({ updateUserPageState, user }) {
       const result = await blogService.addBlog(blogObject)
 
       updateUserPageState(result.data) // updates the state of our user and explore data with new post. addBlogForm -> App.jsx
-      console.log('New blog posted by: ', user.username)
 
       setShowBlogForm(!showBlogForm)
       showSuccessNotification('Blog added successfully.')
       return result.data
 
     } catch(error) {
-      console.log(error)
       showErrorNotification(error.message)
     }
   }

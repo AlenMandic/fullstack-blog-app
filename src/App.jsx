@@ -71,7 +71,6 @@ export default function App() {
           setUserBlogs(blogs)
 
         } catch (err) {
-          console.log(err)
           showErrorNotification(err.message)
         }
       }
@@ -139,7 +138,6 @@ export default function App() {
 
     } catch (err) {
       showErrorNotification('Login failed. Verify login details.')
-      console.log(err)
       resetForm()
     }
   }
@@ -150,7 +148,6 @@ export default function App() {
     if(confirm) {
 
       const deleteBlog = await blogService.deleteBlog(ourBlog.id)
-      console.log(deleteBlog)
 
       const updatedUserBlogs = blogs.filter(blog => blog.id !== ourBlog.id)
       const updatedExplorePageBlogs = explorePageState.filter(blog => blog.id !== ourBlog.id)
@@ -169,7 +166,6 @@ export default function App() {
     blogService.setToken(null)
     userLikesService.setToken(null)
     resetForm()
-    console.log('User logged out.')
   }
 
   function handleUserPosts() {
@@ -208,22 +204,22 @@ export default function App() {
 
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
            <h3 style={{ marginBottom: '76px' }}>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to see all of your blog posts right here!</Alert></div>}
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to see all of your blog posts right here!</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
-             <Link to="/blogs">
+             <Link to="/api/blogs">
               <Typography variant="h5" sx={{ mt: '65px', color: 'white' }}>Browse through posted blog posts</Typography>
               </Link></>}
              />
 
-          <Route path="/blogs" element={<ExplorePage explorePageState={explorePageState} user={user}/>}/>
+          <Route path="/api/blogs" element={<ExplorePage explorePageState={explorePageState} user={user}/>}/>
 
-          <Route path="/users" element={<UsersPage />}/>
+          <Route path="/api/users" element={<UsersPage />}/>
 
-          <Route path="/users/:userId" element={<UserPage user={user} />}/>
+          <Route path="/api/users/:userId" element={<UserPage user={user} />}/>
 
-          <Route path="/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} />}/>
+          <Route path="/api/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} />}/>
 
-          <Route path="/register" element={<CreateSignUpForm user={user} />}/>
+          <Route path="/api/register" element={<CreateSignUpForm user={user} />}/>
 
           <Route path="*" element={<UnknownRoute />} />
 
