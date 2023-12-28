@@ -16,7 +16,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://blog-list-app-backend.fly.dev">
         SnapBlog
       </Link>{' '}
       {new Date().getFullYear()}

@@ -13,7 +13,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="black">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/" target='_blank'>
+      <Link color="inherit" href="https://blog-list-app-backend.fly.dev" target='_blank'>
         SnapBlog, Alen Mandic
       </Link>{' '}
       {new Date().getFullYear()}
@@ -51,14 +51,14 @@ export default function StickyFooter() {
           <Container component="main" maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Typography variant="body1">Contact me:</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <IconButton>
-        <Link href="https://github.com" target="_blank" rel="noopener noreferrer" color="inherit">
+            <IconButton id="github-button" aria-label="Link to my GitHub">
+        <Link href="https://github.com" target="_blank" rel="noopener noreferrer" color="inherit" aria-label="Link to my GitHub">
           <GitHubIcon sx={{ width: '40px', height: '40px', color: 'black' }} />
         </Link>
       </IconButton>
 
-      <IconButton>
-        <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" color="inherit">
+      <IconButton id="linkedin-button" aria-label="Link to my LinkedIn">
+        <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" color="inherit" aria-label="Link to my GitHub">
           <LinkedInIcon sx={{ width: '40px', height: '40px', color: 'black' }} />
         </Link>
       </IconButton>
