@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/users'
+const baseUrl = '/users'
 
 const getAllUsers = async () => {
 
