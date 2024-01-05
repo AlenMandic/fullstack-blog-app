@@ -8,10 +8,13 @@ const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
-const getAllBlogs = async () => {
+// load initial blogs and pagination support
+const getAllBlogs = async ({ page, limit }) => {
 
   try {
-    const response = await axios.get(baseUrl)
+    const response = await axios.get(baseUrl, {
+      params: { page, limit },
+    })
     return response.data
 
   } catch(err) {

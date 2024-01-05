@@ -33,14 +33,32 @@ export default function App() {
   const [notificationError, setNotificationError] = useState(null)
   const [notificationSuccess, setNotificationSuccess] = useState(null)
   const [explorePageState, setExplorePageState] = useState([])
+  const [page, setPage] = useState(1) // initial front page blogs pagination.
   const [showUserPosts, setShowUserPosts] = useState(true)
+  const [loadMoreButtonVisible, setLoadMoreButtonVisible] = useState(true)
 
-  // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm,, this get's updated.
+  // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm,, this get's updated. Pagination implemented.
   useEffect(() => {
     const createExplorePage = async () => {
       try {
-        const explorePageState = await blogService.getAllBlogs()
-        setExplorePageState(explorePageState)
+        const response = await blogService.getAllBlogs({ page, limit: 5 })
+
+        if(page === 1) {
+          setExplorePageState(response)
+          return null
+
+        } else {
+          setExplorePageState((prevExplorePageState) => [
+            ...prevExplorePageState,
+            ...response,
+          ])
+        }
+
+        if (response.length < 5) {
+          setLoadMoreButtonVisible(false)
+        } else {
+          setLoadMoreButtonVisible(true)
+        }
 
       } catch(err) {
         console.error('error fetching initial blogs for explore page: ', err)
@@ -48,7 +66,7 @@ export default function App() {
     }
 
     createExplorePage()
-  }, [])
+  }, [page])
 
   // If user is logged in: retrieve the user once on mount and store it. Give token to relevant services.
   useEffect(() => {
@@ -204,14 +222,14 @@ export default function App() {
 
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
            <h3 style={{ marginBottom: '76px' }}>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to see all of your blog posts right here!</Alert></div>}
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post blogs, see all of your blog posts, and like other blogs!</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
              <Link to="/api/blogs">
-              <Typography variant="h5" sx={{ mt: '65px', color: 'white' }}>Browse through posted blog posts</Typography>
+              <Typography variant="h5" sx={{ my: '98px', color: 'white' }}>Browse through the Front Page</Typography>
               </Link></>}
              />
 
-          <Route path="/api/blogs" element={<ExplorePage explorePageState={explorePageState} user={user}/>}/>
+          <Route path="/api/blogs" element={<ExplorePage explorePageState={explorePageState} user={user} page={page} setPage={setPage} loadMoreButtonVisible={loadMoreButtonVisible} setLoadMoreButtonVisible={setLoadMoreButtonVisible}/>}/>
 
           <Route path="/api/users" element={<UsersPage />}/>
 
