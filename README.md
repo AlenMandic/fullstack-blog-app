@@ -10,6 +10,8 @@
 
 - `React Router` was used to separate the website into relevant pages to enable link sharing and a better user experience
 
+- Full Pagination system implemented for the `Front Page` component/page.
+
 # Testing
 
 - Basic front end testing was started using `Jest`
