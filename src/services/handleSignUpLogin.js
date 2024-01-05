@@ -1,6 +1,6 @@
 import axios from 'axios'
-const baseUrl = '/login'
-const baseUrlSignUp = '/users'
+const baseUrl = 'http://localhost:3003/login'
+const baseUrlSignUp = 'http://localhost:3003/users'
 
 // attempt to register new user
 const registerUser = async credentials => {

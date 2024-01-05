@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/blogs'
+const baseUrl = 'http://localhost:3003/blogs'
 
 let token = null
 
@@ -8,10 +8,13 @@ const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
-const getAllBlogs = async () => {
+// load initial blogs and pagination support
+const getAllBlogs = async ({ page, limit }) => {
 
   try {
-    const response = await axios.get(baseUrl)
+    const response = await axios.get(baseUrl, {
+      params: { page, limit },
+    })
     return response.data
 
   } catch(err) {
@@ -59,7 +62,7 @@ const getUserBlogs = async userInfo => {
       let userId
       userId = userInfo.username
 
-      let userBlogsUrl = `/users/${userId}/blogs`
+      let userBlogsUrl = `http://localhost:3003/users/${userId}/blogs`
 
       const response = await axios.get(userBlogsUrl)
 

@@ -1,12 +1,13 @@
 import { useState, useEffect, React } from 'react'
 import ExploreBlog from './ExploreBlog'
 import BasicSelect from '../mui-components/SelectMenu'
+import { Button } from '@mui/material'
+import { Box } from '@mui/material'
+import Alert from '@mui/material/Alert'
 
 // Returns all blogs and who they belong to. IF someone is logged in, they can like the blog, increasing it's like counter by 1. Implementing infinite scrolling here would be great.
-export default function ExplorePage({
-  explorePageState,
-  user,
-}) {
+export default function ExplorePage({ explorePageState, user, setPage, loadMoreButtonVisible, setLoadMoreButtonVisible }) {
+
   const [publicBlogs, setPublicBlogs] = useState([])
   const [sorting, setSorting] = useState('default')
 
@@ -57,12 +58,23 @@ export default function ExplorePage({
 
   const returnSortedPage = sorting === 'default' ? renderBlogsByDefault : renderBlogsByLikes
 
+// pagination function for the front page 'load more' button
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1)
+  }
+
   return (
     <div>
       <h1>Front Page</h1>
       <h3>Explore blogs posted by others and interact with them.</h3>
       <BasicSelect sorting={sorting} setSorting={setSorting} />
       {returnSortedPage}
+      <Box display="flex" alignItems="center" justifyContent="center">
+
+      {loadMoreButtonVisible && <Button variant="outlined" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '40px', minWidth: '30%', height: '60px' }}>Load More Blogs</Button>}
+
+      {!loadMoreButtonVisible && <Alert severity="info" sx={{ marginTop: '40px', backgroundColor: '#1f1f54', color: 'white', fontSize: '18px', }}>No more blogs left to load in !</Alert>}
+      </Box>
     </div>
   )
 }
