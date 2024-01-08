@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
+import { Typography, useMediaQuery } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 function Copyright(props) {
@@ -29,6 +29,8 @@ function Copyright(props) {
 const defaultTheme = createTheme()
 
 export default function SignInSide({ username, setUsername, password, setPassword, showPassword, handleShowPassword, handleLogin, user }) {
+
+  const isMobile = useMediaQuery('(max-width:500px)')
 
     const loggedIn = <Typography variant="h2" sx={{ mt: '55px' }}>You are currently logged in.</Typography>
     const notLoggedIn = <ThemeProvider theme={defaultTheme}>
@@ -130,6 +132,7 @@ export default function SignInSide({ username, setUsername, password, setPasswor
 
   return (
     <>
+     {!user && <Typography variant={isMobile ? 'h6' : 'h4'} sx={{ textAlign: 'center', mb: '40px' }}>Have an account? Log In</Typography>}
      {!user && notLoggedIn}
      {user && loggedIn}
     </>

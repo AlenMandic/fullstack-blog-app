@@ -4,12 +4,33 @@ import BasicSelect from '../mui-components/SelectMenu'
 import { Button } from '@mui/material'
 import { Box } from '@mui/material'
 import Alert from '@mui/material/Alert'
+import userLikeService from '../services/handleUserLikes'
 
 // Returns all blogs and who they belong to. IF someone is logged in, they can like the blog, increasing it's like counter by 1. Implementing infinite scrolling here would be great.
-export default function ExplorePage({ explorePageState, user, setPage, loadMoreButtonVisible, setLoadMoreButtonVisible }) {
+export default function ExplorePage({ explorePageState, user, setPage, loadMoreButtonVisible }) {
 
   const [publicBlogs, setPublicBlogs] = useState([])
+  const [userLikedBlogs, setUserLikedBlogs] = useState([])
   const [sorting, setSorting] = useState('default')
+
+  // figure out which blogs have been liked by the user to handle like/dislike buttons
+  useEffect(() => {
+    const fetchUserLikedBlogs = async () => {
+
+      try {
+        if (user) {
+          const result = await userLikeService.getLikedPosts(user)
+
+          setUserLikedBlogs(result)
+        }
+
+      } catch (error) {
+        console.error('Error fetching user liked blogs:', error)
+      }
+    }
+
+    fetchUserLikedBlogs()
+  }, [user])
 
   // When our prop 'explorePageState' changes, we render the explore page. This is because we have to wait until the async function resolves the data; we can't set the state directly from the prop here. The initial state of the explorePageState is [], and this effect will run only once when the state changes from [] to the resolved data.
   useEffect(() => {
@@ -35,6 +56,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
           key={blog.id}
           blogObject={blog}
           user={user}
+          getUserLikedBlogs={userLikedBlogs}
           showPostedBy={true}
           enableLikeButton={true}
         />
@@ -49,6 +71,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
           key={blog.id}
           blogObject={blog}
           user={user}
+          getUserLikedBlogs={userLikedBlogs}
           showPostedBy={true}
           enableLikeButton={true}
         />
@@ -71,7 +94,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
       {returnSortedPage}
       <Box display="flex" alignItems="center" justifyContent="center">
 
-      {loadMoreButtonVisible && <Button variant="outlined" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '40px', minWidth: '30%', height: '60px' }}>Load More Blogs</Button>}
+      {loadMoreButtonVisible && <Button variant="contained" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '80px', minWidth: '30%', height: '60px', backgroundColor: 'white', color: 'black' }}>Load More Blogs</Button>}
 
       {!loadMoreButtonVisible && <Alert severity="info" sx={{ marginTop: '40px', backgroundColor: '#1f1f54', color: 'white', fontSize: '18px', }}>No more blogs left to load in !</Alert>}
       </Box>

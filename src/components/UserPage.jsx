@@ -24,10 +24,10 @@ export default function UserPage({ user, userLikedBlogs }) {
                 return null
              }
 
-             setCurrentUserProfile(response.data)
-             setCurrentUserBlogs(response.data.blogs)
+             setCurrentUserProfile(response)
+             setCurrentUserBlogs(response.blogs)
              setShowErrorPage(false)
-             return response.data
+             return response
 
            } catch(err) {
             alert(err.message)
@@ -38,7 +38,7 @@ export default function UserPage({ user, userLikedBlogs }) {
     }, [])
 
     const userBlogs = currentUserBlogs.map(blog => (
-        <ExploreBlog key={blog.id} blogObject={blog} user={user} userLikedBlogs={userLikedBlogs} showPostedBy={false} enableLikeButtonLikeButton={false} />
+        <ExploreBlog key={blog.id} blogObject={blog} user={user} userLikedBlogs={userLikedBlogs} showPostedBy={false} enableLikeButton={false} />
     ))
 
     const errorPage = (
