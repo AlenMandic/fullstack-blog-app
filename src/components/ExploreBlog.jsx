@@ -2,33 +2,29 @@ import { React, useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
 import BlogPostCard from '../mui-components/ExploreBlog'
 
-export default function ExploreBlog({ blogObject, user, showPostedBy, enableLikeButton }) {
+export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showPostedBy, enableLikeButton }) {
 
-  const [userLikedBlogs, setUserLikedBlogs] = useState([])
+  const [userLikedBlogs, setUserLikedBlogs] = useState(getUserLikedBlogs)
   const [isLiked, setIsLiked] = useState(() => {
+
+    if(!enableLikeButton) {
+      return null
+    }
+
     const isThisLiked = userLikedBlogs.includes(blogObject.id)
     return isThisLiked
   })
 
 // figure out which blogs have been liked by the user to handle like/dislike buttons
-  useEffect(() => {
-    const fetchUserLikedBlogs = async () => {
+useEffect(() => {
 
-      try {
-        if (user) {
-          const result = await userLikeService.getLikedPosts(user)
+  if(!enableLikeButton) {
+    return undefined
+  }
 
-          setUserLikedBlogs(result)
-          setIsLiked(result.includes(blogObject.id))
-        }
-
-      } catch (error) {
-        console.error('Error fetching user liked blogs:', error)
-      }
-    }
-
-    fetchUserLikedBlogs()
-  }, [user, blogObject.id])
+  setUserLikedBlogs(getUserLikedBlogs)
+  setIsLiked(getUserLikedBlogs.includes(blogObject.id))
+}, [getUserLikedBlogs, blogObject.id])
 
   async function handleBlogLike() {
     if (!user) {

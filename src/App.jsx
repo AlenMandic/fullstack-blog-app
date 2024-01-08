@@ -20,7 +20,7 @@ import ExplorePage from './components/ExplorePage'
 import UsersPage from './components/UsersPage'
 import UserPage from './components/UserPage'
 import CreateSignUpForm from './components/CreateSignupForm'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import detectLogoutService from './services/handleLogout'
 import UnknownRoute from './components/UnknownRoute'
 
@@ -222,10 +222,10 @@ export default function App() {
 
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
            <h3 style={{ marginBottom: '76px' }}>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post blogs, see all of your blog posts, and like other blogs!</Alert></div>}
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
              <Link to="/api/blogs">
-              <Typography variant="h5" sx={{ my: '98px', color: 'white' }}>Browse through the Front Page</Typography>
+              <Typography variant="h5" sx={{ my: '98px', color: 'white' }}>Front Page 🌍</Typography>
               </Link></>}
              />
 
@@ -235,9 +235,9 @@ export default function App() {
 
           <Route path="/api/users/:userId" element={<UserPage user={user} />}/>
 
-          <Route path="/api/login" element={<CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} />}/>
+          <Route path="/api/login" element={!user ? <CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} /> : <Navigate to="/" />} />
 
-          <Route path="/api/register" element={<CreateSignUpForm user={user} />}/>
+          <Route path="/api/register" element={!user ? <CreateSignUpForm user={user} /> : <Navigate to="/" /> } />
 
           <Route path="*" element={<UnknownRoute />} />
 

@@ -31,9 +31,9 @@ function ResponsiveHeader(props) {
   }
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        SnapBlog 📝
+        SnapBlog 📖
       </Typography>
       <Divider />
       <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
@@ -91,45 +91,50 @@ function ResponsiveHeader(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'block', color: 'black' } }}
           >
-            SnapBlog 📝
+            SnapBlog 📖
           </Typography>
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
-  }, color: 'blue',  }}>
+    color: 'white',
+  }, color: 'black',  }}>
             <HomeIcon />
            </Button>
           </Link>
           <Link to="/api/blogs" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
-  }, color: 'blue',  }}>
+    color: 'white',
+  }, color: 'black',  }}>
             Front Page
            </Button>
           </Link>
           <Link to="/api/users" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
-  }, color: 'blue',  }}>
+    color: 'white',
+  }, color: 'black',  }}>
             Users
            </Button>
           </Link>
     {user && <Button  sx={{ color: 'black', fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
-    color: 'white'
+    color: 'blue'
   }, }} onClick={handleLogOutCallback}>Log Out</Button>}
     {!user && <Link to="/api/register" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
-  }, color: 'blue',  }}>
+    color: 'blue',
+  }, color: 'black',  }}>
             Create Account
            </Button>
           </Link>}
           {!user && <Link to="/api/login" style={{ textDecoration: 'none', color: 'black' }}>
            <Button sx={{ fontSize: '16px', '&:hover': {
     backgroundColor: 'black',
-  }, color: 'blue',  }}>
+    color: 'blue',
+  }, color: 'black',  }}>
             Log In
            </Button>
           </Link>}

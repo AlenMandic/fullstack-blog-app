@@ -2,8 +2,11 @@ import { React, useState } from 'react'
 import loginService from '../services/handleSignUpLogin'
 import { NotificationError, NotificationSuccess } from './Notification'
 import SignUp from '../mui-components/Sign-up'
+import { useNavigate } from 'react-router-dom'
 
 export default function CreateSignUpForm({ user }) {
+
+    const navigate = useNavigate()
 
     const [username, setUsername] = useState('')
     const [name, setName] = useState('')
@@ -55,6 +58,7 @@ export default function CreateSignUpForm({ user }) {
 
           if(response.status === 201) {
             showSuccessNotification('Account created. You may now log in.')
+            navigate('/api/login')
           }
 
           resetForm()

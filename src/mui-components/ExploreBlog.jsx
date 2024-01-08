@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, CardContent, Typography, IconButton, CardActions, Avatar, Link, Button, useMediaQuery, useTheme } from '@mui/material'
 import { styled } from '@mui/system'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import ThumbDownIcon from '@mui/icons-material/ThumbDown'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Link as RouterLink } from 'react-router-dom'
 
 const StyledCard = styled(Card)({
@@ -41,11 +41,11 @@ const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, use
   function showLikeButton() {
     if(!isLiked || user === null) {
       return (<LikeButton color="primary" aria-label="Like" sx={{ mr: '15px' }} onClick={handleBlogLike}>
-      <ThumbUpIcon />
+      <FavoriteBorderIcon sx={{ width: '40px', height: '40px', color: 'black' }}  />
     </LikeButton>)
     }
     return (<DislikeButton color="primary" aria-label="Like" sx={{ mr: '15px' }} onClick={handleBlogDislike}>
-    <ThumbDownIcon />
+    <FavoriteIcon sx={{ width: '40px', height: '40px', color: 'black' }}  />
   </DislikeButton>)
   }
 
@@ -73,8 +73,8 @@ const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, use
 
         {enableLikeButton && showLikeButton()}
 
-        <StyledAvatar sx={{ backgroundColor: 'black' }}>{authorInitials}</StyledAvatar>
-        <StyledButton color="primary" sx={{ mr: '15px', fontSize: isSmallerWidth ? '16px': '22px', ml: enableLikeButton ? 'auto' : '25px' }}>
+        <StyledAvatar sx={{ backgroundColor: 'blue' }}>{authorInitials}</StyledAvatar>
+        <StyledButton color="primary" sx={{ mr: '15px', fontSize: isSmallerWidth ? '16px': '22px', ml: enableLikeButton ? 'auto' : '25px', color: 'black' }}>
           Likes: {blogObject.likes}
         </StyledButton>
         <Button

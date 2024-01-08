@@ -8,7 +8,7 @@ export function NotificationSuccess({ message }) {
   }
 
   return (
-    <Alert severity="success" sx={{ mt: '75px', mb: '20px', backgroundColor: 'rgb(163 213 163)', color: 'black' }}>
+    <Alert severity="success" sx={{ mt: '75px', mb: '5px', backgroundColor: 'rgb(163 213 163)', color: 'black' }}>
       <AlertTitle>Success</AlertTitle>
       {message}
     </Alert>
@@ -21,7 +21,7 @@ export function NotificationError({ message }) {
   }
 
   return (
-    <Alert severity="error" sx={{ backgroundColor: '#480111', color: '#fff', border: '1px solid #6c757d', mt: '75px', mb: '25px' }}>
+    <Alert severity="error" sx={{ backgroundColor: '#480111', color: '#fff', border: '1px solid #6c757d', mt: '75px' }}>
       <AlertTitle>Error</AlertTitle>
       {message}
     </Alert>
