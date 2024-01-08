@@ -56,13 +56,13 @@ function ResponsiveHeader(props) {
           <Divider />
     {user && <Button  sx={{ color: 'black', fontSize: '16px' }} onClick={handleLogOutCallback}>Log Out</Button>}
     {!user && <Link to="/api/register" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px', color: 'blue' }}>
+           <Button sx={{ fontSize: '16px', color: 'black' }}>
             Create Account
            </Button>
           </Link>}
           <Divider />
           {!user && <Link to="/api/login" style={{ textDecoration: 'none', color: 'black' }}>
-           <Button sx={{ fontSize: '16px', color: 'blue' }}>
+           <Button sx={{ fontSize: '16px', color: 'black' }}>
             Log In
            </Button>
           </Link>}

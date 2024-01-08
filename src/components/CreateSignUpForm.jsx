@@ -1,10 +1,10 @@
 import { React, useState } from 'react'
 import loginService from '../services/handleSignUpLogin'
-import { NotificationError, NotificationSuccess } from './Notification'
+import { NotificationError } from './Notification'
 import SignUp from '../mui-components/Sign-up'
 import { useNavigate } from 'react-router-dom'
 
-export default function CreateSignUpForm({ user }) {
+export default function CreateSignUpForm({ user, showSuccessMessageCallback }) {
 
     const navigate = useNavigate()
 
@@ -14,7 +14,6 @@ export default function CreateSignUpForm({ user }) {
     const [repeatPassword, setRepeatPassword] = useState('')
 
     const [notificationError, setNotificationError] = useState(null)
-    const [notificationSuccess, setNotificationSuccess] = useState(null)
 
       function showErrorNotification(message) {
         setNotificationError(message)
@@ -24,12 +23,8 @@ export default function CreateSignUpForm({ user }) {
         }, 5000)
       }
 
-      function showSuccessNotification(message) {
-        setNotificationSuccess(message)
-
-        setTimeout(() => {
-          setNotificationSuccess(null)
-        }, 5000)
+      function handleShowMessageCallback() {
+        showSuccessMessageCallback('Your account has been created successfully! You may now log in.')
       }
 
       function resetForm() {
@@ -57,7 +52,7 @@ export default function CreateSignUpForm({ user }) {
           const response = await loginService.registerUser(newUser)
 
           if(response.status === 201) {
-            showSuccessNotification('Account created. You may now log in.')
+            handleShowMessageCallback()
             navigate('/api/login')
           }
 
@@ -71,7 +66,6 @@ export default function CreateSignUpForm({ user }) {
 
     return <>
       <NotificationError message={notificationError} />
-      <NotificationSuccess message={notificationSuccess} />
       <SignUp user={user} setUsername={setUsername} username={username} name={name} setName={setName} password={password} setPassword={setPassword} repeatPassword={repeatPassword} setRepeatPassword={setRepeatPassword} handleSignUp={handleSignUp} />
       </>
       }

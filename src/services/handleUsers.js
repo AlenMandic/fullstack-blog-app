@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/users'
+const baseUrl = '/users'
 
 const getAllUsers = async () => {
 
@@ -16,7 +16,8 @@ const getIndividualUser = async (userId) => {
     try {
 
        const response = await axios.get(`${baseUrl}/${userId}`)
-       return response
+       console.log(response.data)
+       return response.data
 
     } catch(err) {
         console.log(err)

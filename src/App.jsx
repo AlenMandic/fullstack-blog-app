@@ -222,7 +222,7 @@ export default function App() {
 
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
            <h3 style={{ marginBottom: '76px' }}>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!</Alert></div>}
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!<br></br>Your posts will appear here.</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
              <Link to="/api/blogs">
               <Typography variant="h5" sx={{ my: '98px', color: 'white' }}>Front Page 🌍</Typography>
@@ -237,7 +237,7 @@ export default function App() {
 
           <Route path="/api/login" element={!user ? <CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} /> : <Navigate to="/" />} />
 
-          <Route path="/api/register" element={!user ? <CreateSignUpForm user={user} /> : <Navigate to="/" /> } />
+          <Route path="/api/register" element={!user ? <CreateSignUpForm user={user} showSuccessMessageCallback={showSuccessNotification} /> : <Navigate to="/" /> } />
 
           <Route path="*" element={<UnknownRoute />} />
 
