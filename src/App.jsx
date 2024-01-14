@@ -8,6 +8,7 @@ import { Button } from '@mui/material'
 
 // Regular imports
 import './style.css'
+import { showErrorNotification, showSuccessNotification } from './utils'
 import { useState, useEffect } from 'react'
 import loginService from './services/handleSignUpLogin'
 import blogService from './services/handleBlogs'
@@ -39,7 +40,9 @@ export default function App() {
 
   // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm,, this get's updated. Pagination implemented.
   useEffect(() => {
+
     const createExplorePage = async () => {
+
       try {
         const response = await blogService.getAllBlogs({ page, limit: 5 })
 
@@ -80,8 +83,9 @@ export default function App() {
     }
   }, [])
 
-  // If user is logged in, we render their blog posts.
+  // If user is logged in, we render their blog posts. Also starts the logout detector service, and returns it's cleanup function.
   useEffect(() => {
+
     if (user) {
       const fetchUserBlogs = async () => {
         try {
@@ -89,17 +93,12 @@ export default function App() {
           setUserBlogs(blogs)
 
         } catch (err) {
-          showErrorNotification(err.message)
+          showErrorNotification(err.message, setNotificationError)
         }
       }
+
       fetchUserBlogs()
-    }
-  }, [user])
-
-  // automatic inactivity/logout detection service which starts upon login.
-  useEffect(() => {
-
-    if(user) {
+      // starts the automatic logout detector. Doesn't work if closed browser, only inactivity while open/minimized.
       const cleanUpListeners = detectLogoutService(handleLogout)
 
       return cleanUpListeners
@@ -115,29 +114,11 @@ export default function App() {
     localStorage.removeItem('loggedInBlogAppUser')
   }
 
-  function showErrorNotification(message) {
-    setNotificationError(message)
-
-    setTimeout(() => {
-      setNotificationError(null)
-    }, 5000)
-  }
-
-  function showSuccessNotification(message) {
-    setNotificationSuccess(message)
-
-    setTimeout(() => {
-      setNotificationSuccess(null)
-    }, 5000)
-  }
-
   // updates Homepage and Explore page state when a user adds a new post from addBlogForm.jsx
   function handleBlogSubmitCallback(blogObject) {
     const oldUserBlogs = blogs
-    const oldExploreBlogs = explorePageState
 
     setUserBlogs(oldUserBlogs.concat(blogObject))
-    setExplorePageState(oldExploreBlogs.concat(blogObject))
   }
 
   async function handleLogin(e) {
@@ -152,10 +133,10 @@ export default function App() {
       userLikesService.setToken(user.token)
       setUsername('')
       setPassword('')
-      showSuccessNotification('Logged in successfully.')
+      showSuccessNotification('Logged in successfully.', setNotificationSuccess)
 
     } catch (err) {
-      showErrorNotification('Login failed. Verify login details.')
+      showErrorNotification('Login failed. Verify login details.', setNotificationError)
       resetForm()
     }
   }
@@ -190,12 +171,12 @@ export default function App() {
     if(showUserPosts) {
       return (
         <div>
-          <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600' }}>Hide posts</Button>
+          <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Hide posts</Button>
           <ul>{blogs.map((blog) => (<UserBlog key={blog.id} blogObject={blog} handleDeleteCallback={handleDelete}/>))}</ul>
         </div>
       )
     } else {
-      return <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600' }}>Show your posts</Button>
+      return <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Show your posts</Button>
     }
   }
 
@@ -225,7 +206,7 @@ export default function App() {
             {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!<br></br>Your posts will appear here.</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
              <Link to="/api/blogs">
-              <Typography variant="h5" sx={{ my: '98px', color: 'white' }}>Front Page 🌍</Typography>
+              <Typography variant="h4" sx={{ my: '98px', color: 'black' }}>Front Page 🌍</Typography>
               </Link></>}
              />
 
@@ -237,7 +218,7 @@ export default function App() {
 
           <Route path="/api/login" element={!user ? <CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} /> : <Navigate to="/" />} />
 
-          <Route path="/api/register" element={!user ? <CreateSignUpForm user={user} showSuccessMessageCallback={showSuccessNotification} /> : <Navigate to="/" /> } />
+          <Route path="/api/register" element={!user ? <CreateSignUpForm user={user} showSuccessMessageCallback={showSuccessNotification} setNotificationSuccess={setNotificationSuccess} /> : <Navigate to="/" /> } />
 
           <Route path="*" element={<UnknownRoute />} />
 

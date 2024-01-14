@@ -11,7 +11,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
 
   const [publicBlogs, setPublicBlogs] = useState([])
   const [userLikedBlogs, setUserLikedBlogs] = useState([])
-  const [sorting, setSorting] = useState('default')
+  const [sorting, setSorting] = useState('Default')
 
   // figure out which blogs have been liked by the user to handle like/dislike buttons
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
     </ul>
   )
 
-  const returnSortedPage = sorting === 'default' ? renderBlogsByDefault : renderBlogsByLikes
+  const returnSortedPage = sorting === 'Default' ? renderBlogsByDefault : renderBlogsByLikes
 
 // pagination function for the front page 'load more' button
   const handleLoadMore = () => {
@@ -94,7 +94,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
       {returnSortedPage}
       <Box display="flex" alignItems="center" justifyContent="center">
 
-      {loadMoreButtonVisible && <Button variant="contained" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '80px', minWidth: '30%', height: '60px', backgroundColor: 'white', color: 'black' }}>Load More Blogs</Button>}
+      {loadMoreButtonVisible && <Button variant="outlined" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '80px', minWidth: '30%', height: '60px', backgroundColor: 'white', color: 'black', border: 'solid 1px black' }}>Load More Blogs</Button>}
 
       {!loadMoreButtonVisible && <Alert severity="info" sx={{ marginTop: '40px', backgroundColor: '#1f1f54', color: 'white', fontSize: '18px', }}>No more blogs left to load in !</Alert>}
       </Box>

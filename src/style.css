@@ -2,16 +2,6 @@
   font-weight: normal;
 }
 
-html {
-  background-color: black
-}
-
-body {
-  background-color: black
-}
-
 #root {
-  background-color: black;
-  color: white;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }

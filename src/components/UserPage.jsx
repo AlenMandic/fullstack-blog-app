@@ -55,7 +55,7 @@ export default function UserPage({ user, userLikedBlogs }) {
 
         const likesElement = (
             <div>
-            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>Total likes: <p style={{ color: '#6b6bbb' }}>{sumTotalLikes}</p></h1>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>Total likes: <p style={{ color: 'blue' }}>{sumTotalLikes}</p></h1>
             </div>
         )
 

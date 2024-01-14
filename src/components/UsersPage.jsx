@@ -11,6 +11,7 @@ const [users, setUsers] = useState([])
 useEffect(() => {
 
    const getUsers = async () => {
+
     try {
         const response = await userService.getAllUsers()
         setUsers(response)
@@ -19,6 +20,7 @@ useEffect(() => {
     } catch(err) {
         alert(err.message)
     }
+
    }
 
    getUsers()
@@ -27,14 +29,12 @@ useEffect(() => {
 
 const ourUsers = <List>
 {users.map((user) => (
-  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', color: '#2196F3', '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  }, }}>
-    <ListItemText primary={<Typography variant="subtitle2" component="div">
-          <span style={{ fontWeight: 'bold', color: '#babad4', fontSize: '20px' }}>{user.name}</span>
-          <span style={{ color: '#9e9e9e' }}> - Posted</span>
-          <span style={{ fontWeight: 'bold', color: '#babad4', marginLeft: '4px', fontSize: '25px' }}>{user.blogs.length}</span>
-          <span style={{ color: '#9e9e9e' }}> blogs</span>
+  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', borderRadius: '15px', color: 'black', '&:hover': { backgroundColor: 'black', color: 'white' }  }}>
+    <ListItemText primary={<Typography variant="subtitle2" component="div" sx={{ fontSize: '20px' }}>
+          <span>{user.name}</span>
+          <span> - Posted</span>
+          <span style={{ marginLeft: '4px', fontSize: '30px' }}>{user.blogs.length}</span>
+          <span> blogs</span>
         </Typography>} />
   </ListItemButton>
 ))}

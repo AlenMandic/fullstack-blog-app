@@ -13,9 +13,10 @@ export default function BasicSelect({ sorting, setSorting }) {
     }
 
     return (
-<Box sx={{ width: 220, color: 'white' }}>
+<Box sx={{ width: 220, color: 'black' }}>
 <Typography variant="h5">Sort by: </Typography>
       <FormControl fullWidth sx={{ my: 2 }}>
+      <InputLabel>{sorting}</InputLabel>
         <Select
           labelId="simple-select-label"
           id="simple-select"
@@ -23,10 +24,9 @@ export default function BasicSelect({ sorting, setSorting }) {
           value={sorting}
           label="Sort by"
           onChange={handleChange}
-          sx={{ backgroundColor: 'white' }}
         >
-          <MenuItem value={'default'}>Default</MenuItem>
-          <MenuItem value={'likes'}>Most Liked</MenuItem>
+          <MenuItem value={'Default'}>Default</MenuItem>
+          <MenuItem value={'Likes'}>Most Liked</MenuItem>
         </Select>
       </FormControl>
     </Box>

@@ -27,7 +27,7 @@ const UserPostCard = ({ blogObject, handleDeleteCallback }) => {
   const isSmallerWidth = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <StyledCard sx={{ mb: '20px', ml: '-50px' }}>
+    <StyledCard sx={{ mb: '20px', ml: '-50px', border: 'solid 1px black' }}>
       <CardContent>
         <Typography variant={isSmallerWidth ? 'h6' : 'h4'} component="div">
           {blogObject.title}
