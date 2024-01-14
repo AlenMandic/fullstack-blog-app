@@ -1,31 +1,20 @@
-import { useState, useEffect } from 'react'
-import userService from '../services/handleUsers'
 import { Link } from 'react-router-dom'
 import { List, ListItemButton, ListItemText } from '@mui/material'
 import Typography from '@mui/material/Typography'
+import { useGetUsers } from '../custom-hooks/useGetUsers'
+import LoadingSpinner from '../mui-components/LoadingSpinner'
 
 export default function UsersPage() {
 
-const [users, setUsers] = useState([])
+const { users, loading, error } = useGetUsers()
 
-useEffect(() => {
+if(loading) {
+  return <LoadingSpinner message={'Loading users...'} />
+}
 
-   const getUsers = async () => {
-
-    try {
-        const response = await userService.getAllUsers()
-        setUsers(response)
-        return response
-
-    } catch(err) {
-        alert(err.message)
-    }
-
-   }
-
-   getUsers()
-
-}, [])
+if (error) {
+  return <p>Error: {error.message}</p>
+}
 
 const ourUsers = <List>
 {users.map((user) => (

@@ -21,7 +21,7 @@ const setUpLogOutListeners = (handleLogoutFunction) => {
 
     }
 
-    //if user is active on the page/tab, reset the logout timer
+// if user is active on the page/tab, reset the logout timer
 document.addEventListener('mousemove', resetLogoutTimer)
 document.addEventListener('keypress', resetLogoutTimer)
 

@@ -5,6 +5,7 @@ import StickyFooter from './mui-components/Footer'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
 import { Button } from '@mui/material'
+import LoadingSpinner from './mui-components/LoadingSpinner'
 
 // Regular imports
 import './style.css'
@@ -19,59 +20,23 @@ import UserBlog from './components/UserBlog'
 import { NotificationError, NotificationSuccess, } from './components/Notification'
 import ExplorePage from './components/ExplorePage'
 import UsersPage from './components/UsersPage'
-import UserPage from './components/UserPage'
+import UserPage from './components/IndividualUser'
 import CreateSignUpForm from './components/CreateSignupForm'
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
-import detectLogoutService from './services/handleLogout'
 import UnknownRoute from './components/UnknownRoute'
+import { useCreateExplorePage } from './custom-hooks/useCreateExplorePage'
+import { useUserProfile } from './custom-hooks/useUserProfile'
 
 export default function App() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [blogs, setUserBlogs] = useState([])
   const [notificationError, setNotificationError] = useState(null)
   const [notificationSuccess, setNotificationSuccess] = useState(null)
-  const [explorePageState, setExplorePageState] = useState([])
-  const [page, setPage] = useState(1) // initial front page blogs pagination.
   const [showUserPosts, setShowUserPosts] = useState(true)
-  const [loadMoreButtonVisible, setLoadMoreButtonVisible] = useState(true)
 
-  // Renders and set's the "explore page", this goes to ExplorePage.jsx. Whenever a new post is made with addBlogForm,, this get's updated. Pagination implemented.
-  useEffect(() => {
-
-    const createExplorePage = async () => {
-
-      try {
-        const response = await blogService.getAllBlogs({ page, limit: 5 })
-
-        if(page === 1) {
-          setExplorePageState(response)
-          return null
-
-        } else {
-          setExplorePageState((prevExplorePageState) => [
-            ...prevExplorePageState,
-            ...response,
-          ])
-        }
-
-        if (response.length < 5) {
-          setLoadMoreButtonVisible(false)
-        } else {
-          setLoadMoreButtonVisible(true)
-        }
-
-      } catch(err) {
-        console.error('error fetching initial blogs for explore page: ', err)
-      }
-    }
-
-    createExplorePage()
-  }, [page])
-
-  // If user is logged in: retrieve the user once on mount and store it. Give token to relevant services.
+  // If user is logged in on their ususal device: retrieve the user once on mount and store it. Give token to relevant services.
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedInBlogAppUser')
 
@@ -83,28 +48,22 @@ export default function App() {
     }
   }, [])
 
-  // If user is logged in, we render their blog posts. Also starts the logout detector service, and returns it's cleanup function.
-  useEffect(() => {
+  // custom hook which renders out and handles data for the Front Page page.
+  const { explorePageState, setExplorePageState, loading, error } = useCreateExplorePage()
+  // custom hook for logged in user and automatic logout detector
+  const { blogs, setUserBlogs, loadingUserProfile, errorUserProfile } = useUserProfile(user, handleLogout)
 
-    if (user) {
-      const fetchUserBlogs = async () => {
-        try {
-          const blogs = await blogService.getUserBlogs(user)
-          setUserBlogs(blogs)
+  if(loading) {
+    return <LoadingSpinner message={'Loading data...'} />
+  } else if(error) {
+    return <p>Error: {error.message}</p>
+  }
 
-        } catch (err) {
-          showErrorNotification(err.message, setNotificationError)
-        }
-      }
-
-      fetchUserBlogs()
-      // starts the automatic logout detector. Doesn't work if closed browser, only inactivity while open/minimized.
-      const cleanUpListeners = detectLogoutService(handleLogout)
-
-      return cleanUpListeners
-    }
-
-  }, [user])
+  if(loadingUserProfile) {
+    return <LoadingSpinner message={'Loading your profile...'} />
+  } else if (errorUserProfile) {
+    return <p>Error: {errorUserProfile.message}</p>
+  }
 
   function resetForm() {
     setUsername('')
@@ -203,14 +162,14 @@ export default function App() {
 
            <h1>Welcome to SnapBlog, a blog sharing site!</h1>
            <h3 style={{ marginBottom: '76px' }}>Share and save your favorite blog posts with others.</h3>
-            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!<br></br>Your posts will appear here.</Alert></div>}
+            {!user && <div><Alert severity="info" style={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!<br></br>Your profile will appear here.</Alert></div>}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
              <Link to="/api/blogs">
               <Typography variant="h4" sx={{ my: '98px', color: 'black' }}>Front Page 🌍</Typography>
               </Link></>}
              />
 
-          <Route path="/api/blogs" element={<ExplorePage explorePageState={explorePageState} user={user} page={page} setPage={setPage} loadMoreButtonVisible={loadMoreButtonVisible} setLoadMoreButtonVisible={setLoadMoreButtonVisible}/>}/>
+          <Route path="/api/blogs" element={<ExplorePage user={user}/>}/>
 
           <Route path="/api/users" element={<UsersPage />}/>
 

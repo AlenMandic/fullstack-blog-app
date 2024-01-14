@@ -1,41 +1,24 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import getUserProfileService from '../services/handleUsers'
+import { useGetIndividualUser } from '../custom-hooks/useGetIndividualUser'
 import ExploreBlog from './ExploreBlog'
 import Alert from '@mui/material/Alert'
+import LoadingSpinner from '../mui-components/LoadingSpinner'
 
 export default function UserPage({ user, userLikedBlogs }) {
 
-    const [currentUserProfile, setCurrentUserProfile] = useState({})
-    const [currentUserBlogs, setCurrentUserBlogs] = useState([])
-    const [showErrorPage, setShowErrorPage] = useState(false)
-
     const { userId } = useParams()
 
-    useEffect(() => {
+    const { currentUserProfile, currentUserBlogs, loading, error, showErrorPage } = useGetIndividualUser(userId)
 
-        const getUserProfile = async () => {
+    if(loading) {
+        return <LoadingSpinner message={'Loading User Profile...'} />
+    }
 
-           try {
-             const response = await getUserProfileService.getIndividualUser(userId)
-
-             if(response === 400 || response === 404) {
-                setShowErrorPage(true)
-                return null
-             }
-
-             setCurrentUserProfile(response)
-             setCurrentUserBlogs(response.blogs)
-             setShowErrorPage(false)
-             return response
-
-           } catch(err) {
-            alert(err.message)
-           }
-        }
-        getUserProfile()
-
-    }, [])
+    if(error) {
+        return <p>Error: {error.message}</p>
+    }
 
     const userBlogs = currentUserBlogs.map(blog => (
         <ExploreBlog key={blog.id} blogObject={blog} user={user} userLikedBlogs={userLikedBlogs} showPostedBy={false} enableLikeButton={false} />

@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/blogs'
+const baseUrl = '/blogs'
 
 let token = null
 
@@ -62,7 +62,7 @@ const getUserBlogs = async userInfo => {
       let userId
       userId = userInfo.username
 
-      let userBlogsUrl = `http://localhost:3003/users/${userId}/blogs`
+      let userBlogsUrl = `/users/${userId}/blogs`
 
       const response = await axios.get(userBlogsUrl)
 
