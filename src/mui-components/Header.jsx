@@ -32,7 +32,7 @@ function ResponsiveHeader(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2, textDecoration: 'none' }} onClick={() => location.reload()}>
         SnapBlog 📖
       </Typography>
       <Divider />
@@ -88,8 +88,8 @@ function ResponsiveHeader(props) {
           </IconButton>
           <Typography
             variant="h4"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', md: 'block', color: 'black' } }}
+            onClick={() => location.reload()}
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'block', color: 'black', cursor: 'pointer' } }}
           >
             SnapBlog 📖
           </Typography>

@@ -3,8 +3,9 @@ import loginService from '../services/handleSignUpLogin'
 import { NotificationError } from './Notification'
 import SignUp from '../mui-components/Sign-up'
 import { useNavigate } from 'react-router-dom'
+import { showErrorNotification } from '../utils'
 
-export default function CreateSignUpForm({ user, showSuccessMessageCallback }) {
+export default function CreateSignUpForm({ user, showSuccessMessageCallback, setNotificationSuccess }) {
 
     const navigate = useNavigate()
 
@@ -15,16 +16,8 @@ export default function CreateSignUpForm({ user, showSuccessMessageCallback }) {
 
     const [notificationError, setNotificationError] = useState(null)
 
-      function showErrorNotification(message) {
-        setNotificationError(message)
-
-        setTimeout(() => {
-          setNotificationError(null)
-        }, 5000)
-      }
-
       function handleShowMessageCallback() {
-        showSuccessMessageCallback('Your account has been created successfully! You may now log in.')
+        showSuccessMessageCallback('Your account has been created successfully! You may now log in.', setNotificationSuccess)
       }
 
       function resetForm() {
@@ -38,15 +31,11 @@ export default function CreateSignUpForm({ user, showSuccessMessageCallback }) {
         e.preventDefault()
 
         if(password !== repeatPassword) {
-            showErrorNotification('Passwords dont match!')
+            showErrorNotification('Passwords dont match!', setNotificationError)
             return null
         }
 
-        const newUser = {
-          username: username,
-          name: name,
-          password: password
-        }
+        const newUser = { username, name, password }
 
          try {
           const response = await loginService.registerUser(newUser)
@@ -60,7 +49,7 @@ export default function CreateSignUpForm({ user, showSuccessMessageCallback }) {
           return response
 
          } catch(err) {
-          showErrorNotification('An error occured while registering your account.')
+          showErrorNotification('An error occured while registering your account.', setNotificationError)
          }
       }
 

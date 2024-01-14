@@ -16,7 +16,6 @@ const getIndividualUser = async (userId) => {
     try {
 
        const response = await axios.get(`${baseUrl}/${userId}`)
-       console.log(response.data)
        return response.data
 
     } catch(err) {

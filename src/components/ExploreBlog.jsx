@@ -24,6 +24,7 @@ useEffect(() => {
 
   setUserLikedBlogs(getUserLikedBlogs)
   setIsLiked(getUserLikedBlogs.includes(blogObject.id))
+
 }, [getUserLikedBlogs, blogObject.id])
 
   async function handleBlogLike() {

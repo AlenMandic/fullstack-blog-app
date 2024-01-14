@@ -50,7 +50,7 @@ const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, use
   }
 
   return (
-    <StyledCard sx={{ mb: '20px', ml: enableLikeButton ? '-50px' : null }}>
+    <StyledCard sx={{ mb: '20px', ml: enableLikeButton ? '-50px' : null, border: 'solid 1px black' }}>
       <CardContent>
         <Typography variant={isSmallerWidth ? 'h6' : 'h4'} component="div">
           {blogObject.title}

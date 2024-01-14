@@ -4,44 +4,27 @@ import BasicSelect from '../mui-components/SelectMenu'
 import { Button } from '@mui/material'
 import { Box } from '@mui/material'
 import Alert from '@mui/material/Alert'
-import userLikeService from '../services/handleUserLikes'
+import { useGetUserLikedBlogs } from '../custom-hooks/useGetUserLikedBlogs'
+import { useCreateExplorePage } from '../custom-hooks/useCreateExplorePage'
+import LoadingSpinner from '../mui-components/LoadingSpinner'
 
 // Returns all blogs and who they belong to. IF someone is logged in, they can like the blog, increasing it's like counter by 1. Implementing infinite scrolling here would be great.
-export default function ExplorePage({ explorePageState, user, setPage, loadMoreButtonVisible }) {
+export default function ExplorePage({ user }) {
 
-  const [publicBlogs, setPublicBlogs] = useState([])
-  const [userLikedBlogs, setUserLikedBlogs] = useState([])
-  const [sorting, setSorting] = useState('default')
+  const [sorting, setSorting] = useState('Default')
 
-  // figure out which blogs have been liked by the user to handle like/dislike buttons
-  useEffect(() => {
-    const fetchUserLikedBlogs = async () => {
+  const { userLikedBlogs, loading, error } = useGetUserLikedBlogs(user)
+  const { explorePageState, loadMoreButtonVisible, setPage } = useCreateExplorePage()
 
-      try {
-        if (user) {
-          const result = await userLikeService.getLikedPosts(user)
-
-          setUserLikedBlogs(result)
-        }
-
-      } catch (error) {
-        console.error('Error fetching user liked blogs:', error)
-      }
-    }
-
-    fetchUserLikedBlogs()
-  }, [user])
-
-  // When our prop 'explorePageState' changes, we render the explore page. This is because we have to wait until the async function resolves the data; we can't set the state directly from the prop here. The initial state of the explorePageState is [], and this effect will run only once when the state changes from [] to the resolved data.
-  useEffect(() => {
-    setPublicBlogs(explorePageState)
-  }, [explorePageState])
-
-  if (publicBlogs.length === 0) {
-    return <p>No blogs posted yet.</p>
+  if(loading) {
+    return <LoadingSpinner message={'Loading data...'} />
   }
 
-  const ourPublicBlogs = publicBlogs.map((blog) => blog)
+  if(error) {
+    return <p>Error: {error.message}</p>
+  }
+
+  const ourPublicBlogs = explorePageState.map((blog) => blog)
 
   function compareBlogsByLikes(a, b) {
     return b.likes - a.likes
@@ -66,7 +49,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
 
   const renderBlogsByDefault = (
     <ul>
-      {publicBlogs.map((blog) => (
+      {explorePageState.map((blog) => (
         <ExploreBlog
           key={blog.id}
           blogObject={blog}
@@ -79,7 +62,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
     </ul>
   )
 
-  const returnSortedPage = sorting === 'default' ? renderBlogsByDefault : renderBlogsByLikes
+  const returnSortedPage = sorting === 'Default' ? renderBlogsByDefault : renderBlogsByLikes
 
 // pagination function for the front page 'load more' button
   const handleLoadMore = () => {
@@ -94,7 +77,7 @@ export default function ExplorePage({ explorePageState, user, setPage, loadMoreB
       {returnSortedPage}
       <Box display="flex" alignItems="center" justifyContent="center">
 
-      {loadMoreButtonVisible && <Button variant="contained" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '80px', minWidth: '30%', height: '60px', backgroundColor: 'white', color: 'black' }}>Load More Blogs</Button>}
+      {loadMoreButtonVisible && <Button variant="outlined" onClick={handleLoadMore} sx={{ fontWeight: '600', marginTop: '80px', minWidth: '30%', height: '60px', backgroundColor: 'white', color: 'black', border: 'solid 1px black' }}>Load More Blogs</Button>}
 
       {!loadMoreButtonVisible && <Alert severity="info" sx={{ marginTop: '40px', backgroundColor: '#1f1f54', color: 'white', fontSize: '18px', }}>No more blogs left to load in !</Alert>}
       </Box>

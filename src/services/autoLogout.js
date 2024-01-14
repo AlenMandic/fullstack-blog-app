@@ -1,11 +1,11 @@
 // automatic logout after 1 hour of inactivity, or minimizing the browser/switching tabs.
 
 let logoutTimer
+const timeout = 3600000 //1 hour
 
 const setUpLogOutListeners = (handleLogoutFunction) => {
 
     const startLogoutTimer = () => {
-        const timeout = 3600000 //1 hour
 
         logoutTimer = setTimeout(() => {
 
@@ -21,7 +21,7 @@ const setUpLogOutListeners = (handleLogoutFunction) => {
 
     }
 
-    //if user is active on the page/tab, reset the logout timer
+// if user is active on the page/tab, reset the logout timer
 document.addEventListener('mousemove', resetLogoutTimer)
 document.addEventListener('keypress', resetLogoutTimer)
 

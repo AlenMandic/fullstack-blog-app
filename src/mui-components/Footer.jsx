@@ -11,7 +11,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn'
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="white" sx={{ fontFamily: 'Cambria' }}>
+    <Typography variant="body2" color="black" sx={{ fontFamily: 'Cambria' }}>
       {'Copyright © '}
       <Link color="inherit" href="https://blog-list-app-backend.fly.dev" target='_blank'>
         Alen Mandic
@@ -45,9 +45,9 @@ export default function StickyFooter() {
           sx={{
             py: 3,
             px: 2,
-            color: 'white',
+            color: 'black',
             borderRadius: '4px',
-            backgroundColor: 'black',
+            backgroundColor: 'white',
             minWidth: '40%',
           }}
         >
@@ -56,7 +56,7 @@ export default function StickyFooter() {
             <Typography variant="body1" sx={{ fontSize: isMobile ? '14px' : '20px', fontStyle: 'italic', mr: '10px', fontFamily: 'Cambria' }}>Contact me</Typography>
             <IconButton id="github-button" aria-label="Link to my GitHub">
         <Link href="https://github.com/AlenMandic" target="_blank" rel="noopener noreferrer" color="inherit" aria-label="Link to my GitHub">
-          <GitHubIcon sx={{ width: '40px', height: '40px', color: 'white','&:hover': {
+          <GitHubIcon sx={{ width: '40px', height: '40px', color: 'black','&:hover': {
             color: 'blue',
             transform: 'scale(1.2)',
           }, }} />
@@ -65,7 +65,7 @@ export default function StickyFooter() {
 
       <IconButton id="linkedin-button" aria-label="Link to my LinkedIn">
         <Link href="https://www.linkedin.com/in/alen-mandic-2327a92a7/" target="_blank" rel="noopener noreferrer" color="inherit" aria-label="Link to my LinkedIn">
-          <LinkedInIcon sx={{ width: '40px', height: '40px', color: 'white', '&:hover': {
+          <LinkedInIcon sx={{ width: '40px', height: '40px', color: 'black', '&:hover': {
             color: 'blue',
             transform: 'scale(1.2)',
           }, }} />
