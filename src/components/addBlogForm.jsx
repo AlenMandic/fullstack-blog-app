@@ -56,7 +56,7 @@ export default function AddBlog({ updateUserPageState }) {
           <Typography variant="h5">Post a new blog</Typography>
           <form onSubmit={handleBlogSubmit}>
             <div>
-            <TextField variant="filled" label="Title" type="text" name="title-input"  required value={title} onChange={({
+            <TextField variant="outlined" label="Title" type="text" name="title-input"  required value={title} onChange={({
                 target
               }) => setTitle(target.value)}
                style={{ margin: '10px', borderRadius: '4px' }}
@@ -66,7 +66,7 @@ export default function AddBlog({ updateUserPageState }) {
               }}></TextField>
             </div>
             <div>
-            <TextField variant="filled" label="Author" type="text" name="author-input"  required value={author} onChange={({
+            <TextField variant="outlined" label="Author" type="text" name="author-input"  required value={author} onChange={({
                 target
               }) => setAuthor(target.value)}
                style={{ margin: '10px' }}
@@ -76,7 +76,7 @@ export default function AddBlog({ updateUserPageState }) {
               }}></TextField>
             </div>
             <div>
-            <TextField variant="filled" label="URL" type="text" name="url-input"  required value={url} onChange={({
+            <TextField variant="outlined" label="URL" type="text" name="url-input"  required value={url} onChange={({
                 target
               }) => setUrl(target.value)}
                style={{ margin: '10px' }}
@@ -86,7 +86,7 @@ export default function AddBlog({ updateUserPageState }) {
               }}></TextField>
             </div>
             <div>
-            <TextField variant="filled" label="Likes" type="number" name="likes-input" value={likes} onChange={({
+            <TextField variant="outlined" label="Likes" type="number" name="likes-input" value={likes} onChange={({
                 target
               }) => setLikes(target.value)}
                style={{ margin: '10px' }}

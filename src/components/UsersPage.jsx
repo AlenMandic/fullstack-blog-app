@@ -18,7 +18,7 @@ if (error) {
 
 const ourUsers = <List>
 {users.map((user) => (
-  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', borderRadius: '15px', color: 'black', '&:hover': { backgroundColor: 'black', color: 'white' }  }}>
+  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', borderRadius: '4px', color: 'black', '&:hover': { backgroundColor: 'black', color: 'white' }  }}>
     <ListItemText primary={<Typography variant="subtitle2" component="div" sx={{ fontSize: '20px' }}>
           <span>{user.name}</span>
           <span> - Posted</span>

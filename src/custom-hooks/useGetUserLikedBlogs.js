@@ -9,9 +9,11 @@ export const useGetUserLikedBlogs = (user) => {
 
       // figure out which blogs have been liked by the user to handle like/dislike buttons
   useEffect(() => {
+
     const fetchUserLikedBlogs = async () => {
 
       try {
+
         if (user) {
            setLoading(true)
           const result = await userLikeService.getLikedPosts(user)

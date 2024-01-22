@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import getUserProfileService from '../services/handleUsers'
 import { useGetIndividualUser } from '../custom-hooks/useGetIndividualUser'
+import { useGetUserLikedBlogs } from '../custom-hooks/useGetUserLikedBlogs'
 import ExploreBlog from './ExploreBlog'
 import Alert from '@mui/material/Alert'
 import LoadingSpinner from '../mui-components/LoadingSpinner'
+import { Container, Typography } from '@mui/material'
 
-export default function UserPage({ user, userLikedBlogs }) {
+export default function UserPage({ user }) {
 
     const { userId } = useParams()
-
+    const { userLikedBlogs } = useGetUserLikedBlogs(user)
     const { currentUserProfile, currentUserBlogs, loading, error, showErrorPage } = useGetIndividualUser(userId)
 
     if(loading) {
@@ -21,12 +21,12 @@ export default function UserPage({ user, userLikedBlogs }) {
     }
 
     const userBlogs = currentUserBlogs.map(blog => (
-        <ExploreBlog key={blog.id} blogObject={blog} user={user} userLikedBlogs={userLikedBlogs} showPostedBy={false} enableLikeButton={false} />
+        <ExploreBlog key={blog.id} blogObject={blog} user={user} getUserLikedBlogs={userLikedBlogs} showPostedBy={false} isIndividualPage={false} />
     ))
 
     const errorPage = (
         <div className="errorPage">
-        <Alert severity="error">Ooops. That page is in another castle.</Alert>
+        <Alert severity="error" sx={{ fontWeight: '600', fontSize: '20px' }}>Ooops. That page is in another castle.</Alert>
         <h1 style={{ marginTop: '70px' }}>🛠️ Something went wrong. Ensure the user profile you are looking for exists.</h1>
         </div>
     )
@@ -38,7 +38,7 @@ export default function UserPage({ user, userLikedBlogs }) {
 
         const likesElement = (
             <div>
-            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>Total likes: <p style={{ color: 'blue' }}>{sumTotalLikes}</p></h1>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginLeft: '-50px', color: 'black' }}>Total likes: <p style={{ color: 'blue' }}>{sumTotalLikes}</p></h1>
             </div>
         )
 
@@ -47,18 +47,18 @@ export default function UserPage({ user, userLikedBlogs }) {
 
     const userPage =  (
         <div className="userPage">
-        <h1>Welcome to {currentUserProfile.name}{'\''}s profile</h1>
+        <h1 style={{ marginLeft: '-50px', color: 'black' }}>Welcome to {currentUserProfile.name}{'\''}s profile</h1>
         {getTotalLikes()}
-        <h2>Blogs posted:</h2>
+        <h2 style={{ marginLeft: '-50px', color: 'black' }}>Blogs posted:</h2>
         </div>
     )
 
     const renderUserProfile = showErrorPage === false ? userPage : errorPage
 
     return (
-        <>
+        <Container sx={{ ml: '20px' }}>
         {renderUserProfile}
         {!(showErrorPage) && userBlogs.length === 0 ? <h2 style={{ marginTop: '100px' }}>{currentUserProfile.name} has not posted any blogs yet!</h2> : userBlogs}
-        </>
+        </Container>
     )
 }

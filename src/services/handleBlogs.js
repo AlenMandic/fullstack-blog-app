@@ -22,6 +22,23 @@ const getAllBlogs = async ({ page, limit }) => {
   }
 }
 
+const getIndividualBlog = async (blogId) => {
+   try {
+    const response = await axios.get(`${baseUrl}/${blogId}`)
+    return response.data
+
+   } catch(err) {
+    console.log(err)
+
+    if(err.response.status === 404) {
+      return err.response.status
+  } else if(err.response.status === 400) {
+      return err.response.status
+     }
+
+   }
+}
+
 // whenever our requests go to the protected routes which require authentication, we need to send an authorization header with our token along the request, token will be present on the front-end if the user is authenticated.
 const addBlog = async blogData => {
 
@@ -54,11 +71,12 @@ const deleteBlog = async blogId => {
     console.log(err)
   }
 }
-
+// for rendering user profile homepage
 const getUserBlogs = async userInfo => {
-  // if user is logged in, all of their blogs should be rendered on the page.
+
   if (token !== null) {
     try {
+
       let userId
       userId = userInfo.username
 
@@ -78,4 +96,21 @@ const getUserBlogs = async userInfo => {
   return []
 }
 
-export default { setToken, addBlog, getUserBlogs, getAllBlogs, deleteBlog }
+// logged in users can add new comments to individual blog pages
+const addBlogComment = async (blogId, commentObject) => {
+
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  try {
+    const response = await axios.post(`${baseUrl}/${blogId}/comments`, commentObject, config)
+    return response.data
+
+  } catch(err) {
+    console.log(err)
+  }
+
+}
+
+export default { setToken, addBlog, addBlogComment, getUserBlogs, getAllBlogs, getIndividualBlog, deleteBlog }
