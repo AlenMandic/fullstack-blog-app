@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/blogs'
+const baseUrl = 'http://localhost:3003/blogs'
 
 let token = null
 
@@ -20,6 +20,23 @@ const getAllBlogs = async ({ page, limit }) => {
   } catch(err) {
     console.log(err)
   }
+}
+
+const getIndividualBlog = async (blogId) => {
+   try {
+    const response = await axios.get(`${baseUrl}/${blogId}`)
+    return response.data
+
+   } catch(err) {
+    console.log(err)
+
+    if(err.response.status === 404) {
+      return err.response.status
+  } else if(err.response.status === 400) {
+      return err.response.status
+     }
+
+   }
 }
 
 // whenever our requests go to the protected routes which require authentication, we need to send an authorization header with our token along the request, token will be present on the front-end if the user is authenticated.
@@ -62,7 +79,7 @@ const getUserBlogs = async userInfo => {
       let userId
       userId = userInfo.username
 
-      let userBlogsUrl = `/users/${userId}/blogs`
+      let userBlogsUrl = `http://localhost:3003/users/${userId}/blogs`
 
       const response = await axios.get(userBlogsUrl)
 
@@ -78,4 +95,4 @@ const getUserBlogs = async userInfo => {
   return []
 }
 
-export default { setToken, addBlog, getUserBlogs, getAllBlogs, deleteBlog }
+export default { setToken, addBlog, getUserBlogs, getAllBlogs, getIndividualBlog, deleteBlog }

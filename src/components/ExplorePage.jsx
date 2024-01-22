@@ -41,7 +41,7 @@ export default function ExplorePage({ user }) {
           user={user}
           getUserLikedBlogs={userLikedBlogs}
           showPostedBy={true}
-          enableLikeButton={true}
+          isIndividualPage={false}
         />
       ))}
     </ul>
@@ -56,7 +56,7 @@ export default function ExplorePage({ user }) {
           user={user}
           getUserLikedBlogs={userLikedBlogs}
           showPostedBy={true}
-          enableLikeButton={true}
+          isIndividualPage={false}
         />
       ))}
     </ul>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardContent, Typography, IconButton, CardActions, Avatar, Link, Button, useMediaQuery, useTheme } from '@mui/material'
+import { Card, CardContent, Typography, IconButton, CardActions, Avatar, Link, Button, useMediaQuery, useTheme, Box } from '@mui/material'
 import { styled } from '@mui/system'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -23,17 +23,12 @@ const DislikeButton = styled(IconButton)({
     marginRight: theme => theme.spacing(2),
   })
 
-const StyledButton = styled(IconButton)({
-  color: 'blue',
-  marginLeft: 'auto',
-})
-
 const getInitials = (name) => {
   const nameArray = name.split(' ')
   return nameArray.map(part => part.charAt(0)).join('')
 }
 
-const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, user, handleBlogLike, handleBlogDislike }) => {
+const BlogPostCard = ({ blogObject, showPostedBy, isLiked, user, handleBlogLike, handleBlogDislike, isIndividualPage }) => {
   const authorInitials = getInitials(blogObject.author)
   const theme = useTheme()
   const isSmallerWidth = useMediaQuery(theme.breakpoints.down('sm'))
@@ -41,25 +36,25 @@ const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, use
   function showLikeButton() {
     if(!isLiked || user === null) {
       return (<LikeButton color="primary" aria-label="Like" sx={{ mr: '15px' }} onClick={handleBlogLike}>
-      <FavoriteBorderIcon sx={{ width: '40px', height: '40px', color: 'black' }}  />
+      <FavoriteBorderIcon sx={{ width: '35px', height: '35px', color: 'black' }}  />
     </LikeButton>)
     }
     return (<DislikeButton color="primary" aria-label="Like" sx={{ mr: '15px' }} onClick={handleBlogDislike}>
-    <FavoriteIcon sx={{ width: '40px', height: '40px', color: 'black' }}  />
+    <FavoriteIcon sx={{ width: '35px', height: '35px', color: 'black' }}  />
   </DislikeButton>)
   }
 
   return (
-    <StyledCard sx={{ mb: '20px', ml: enableLikeButton ? '-50px' : null, border: 'solid 1px black' }}>
+    <StyledCard sx={{ mb: '20px', ml: '-50px', border: 'solid 1px black' }}>
       <CardContent>
-        <Typography variant={isSmallerWidth ? 'h6' : 'h4'} component="div">
+        <Typography variant={isSmallerWidth ? 'h6' : 'h5'} component="div" sx={{ color: 'black' }}>
           {blogObject.title}
         </Typography>
         <Typography variant={isSmallerWidth ? 'h7' : 'h6' } color="textSecondary">
           by {blogObject.author}
         </Typography>
-        <Typography variant="p" color="textSecondary" paragraph>
-        <Link href={blogObject.url} target="_blank" rel="noopener noreferrer" color="primary" underline="always">
+        <Typography variant="p" paragraph>
+        <Link href={blogObject.url} target="_blank" rel="noopener noreferrer" color="primary" underline="always"  sx={{ color: 'blue' }}>
     {blogObject.url}
   </Link>
         </Typography>
@@ -71,21 +66,20 @@ const BlogPostCard = ({ blogObject, showPostedBy, enableLikeButton, isLiked, use
       </CardContent>
       <CardActions>
 
-        {enableLikeButton && showLikeButton()}
-
-        <StyledAvatar sx={{ backgroundColor: 'blue' }}>{authorInitials}</StyledAvatar>
-        <StyledButton color="primary" sx={{ mr: '15px', fontSize: isSmallerWidth ? '16px': '22px', ml: enableLikeButton ? 'auto' : '25px', color: 'black' }}>
-          Likes: {blogObject.likes}
-        </StyledButton>
-        <Button
+        <StyledAvatar sx={{ backgroundColor: 'blue', mr: '20px' }}>{authorInitials}</StyledAvatar>
+        {!isIndividualPage && <RouterLink to={`/api/blogs/${blogObject.id}`}>
+<Button
   color="primary"
-  onClick={() => window.open(blogObject.url, '_blank')}
   variant="outlined"
-  sx={{ display: { xs: 'none', sm: 'block' }, color: 'blue', }}
+  sx={{ color: 'black', fontWeight: '600', border: 'solid 1px black' }}
 >
-  View Blog
+  View Post
 </Button>
+</RouterLink>}
       </CardActions>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>{showLikeButton()}<Typography variant="h6" sx={{ ml: '-20px', color: 'black' }}>{blogObject.likes}</Typography>
+<RouterLink to={`/api/blogs/${blogObject.id}`}><Typography variant="h6" sx={{ ml: '20px', my: '5px', cursor: 'pointer', color: 'black' }}>0 comments</Typography></RouterLink>
+</Box>
     </StyledCard>
   )
 }

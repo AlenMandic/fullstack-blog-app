@@ -2,14 +2,10 @@ import { React, useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
 import BlogPostCard from '../mui-components/ExploreBlog'
 
-export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showPostedBy, enableLikeButton }) {
+export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showPostedBy, isIndividualPage }) {
 
   const [userLikedBlogs, setUserLikedBlogs] = useState(getUserLikedBlogs)
   const [isLiked, setIsLiked] = useState(() => {
-
-    if(!enableLikeButton) {
-      return null
-    }
 
     const isThisLiked = userLikedBlogs.includes(blogObject.id)
     return isThisLiked
@@ -17,10 +13,6 @@ export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showP
 
 // figure out which blogs have been liked by the user to handle like/dislike buttons
 useEffect(() => {
-
-  if(!enableLikeButton) {
-    return undefined
-  }
 
   setUserLikedBlogs(getUserLikedBlogs)
   setIsLiked(getUserLikedBlogs.includes(blogObject.id))
@@ -51,5 +43,5 @@ useEffect(() => {
     return result.data
   }
 
-  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} enableLikeButton={enableLikeButton} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} />
+  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} isIndividualPage={isIndividualPage} />
 }

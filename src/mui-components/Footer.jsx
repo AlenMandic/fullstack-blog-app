@@ -53,7 +53,7 @@ export default function StickyFooter() {
         >
           <Container component="main" maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Typography variant="body1" sx={{ fontSize: isMobile ? '14px' : '20px', fontStyle: 'italic', mr: '10px', fontFamily: 'Cambria' }}>Contact me</Typography>
+            <Typography variant="body1" sx={{ fontSize: isMobile ? '16px' : '20px', fontStyle: 'italic', mr: '10px', fontFamily: 'Cambria' }}>Contact me</Typography>
             <IconButton id="github-button" aria-label="Link to my GitHub">
         <Link href="https://github.com/AlenMandic" target="_blank" rel="noopener noreferrer" color="inherit" aria-label="Link to my GitHub">
           <GitHubIcon sx={{ width: '40px', height: '40px', color: 'black','&:hover': {

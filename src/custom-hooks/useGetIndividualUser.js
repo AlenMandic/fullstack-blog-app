@@ -36,7 +36,7 @@ export const useGetIndividualUser = (userId) => {
         }
         getUserProfile()
 
-    }, [])
+    }, [userId])
 
     return { currentUserProfile, currentUserBlogs, loading, error, showErrorPage }
 

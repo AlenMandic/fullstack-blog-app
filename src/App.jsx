@@ -26,6 +26,7 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-ro
 import UnknownRoute from './components/UnknownRoute'
 import { useCreateExplorePage } from './custom-hooks/useCreateExplorePage'
 import { useUserProfile } from './custom-hooks/useUserProfile'
+import IndividualBlogPage from './components/IndividualBlog'
 
 export default function App() {
 
@@ -174,6 +175,8 @@ export default function App() {
           <Route path="/api/users" element={<UsersPage />}/>
 
           <Route path="/api/users/:userId" element={<UserPage user={user} />}/>
+
+          <Route path="/api/blogs/:blogId" element={<IndividualBlogPage user={user} />}/>
 
           <Route path="/api/login" element={!user ? <CreateLoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} user={user} /> : <Navigate to="/" />} />
 
