@@ -4,6 +4,7 @@ import blogService from '../services/handleBlogs'
 export const useIndividualBlog = (blogId) => {
 
     const [blogInfo, setBlogInfo] = useState(null)
+    const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -22,6 +23,7 @@ export const useIndividualBlog = (blogId) => {
                  }
 
                 setBlogInfo(response)
+                setComments(response.comments)
 
             } catch(err) {
                 setError(err.message)
@@ -36,6 +38,6 @@ export const useIndividualBlog = (blogId) => {
 
     }, [blogId])
 
-    return { blogInfo, loading, error }
+    return { blogInfo, comments, setComments, loading, error }
 
 }

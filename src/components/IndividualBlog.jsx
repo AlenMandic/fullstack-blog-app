@@ -1,18 +1,20 @@
 import { useParams } from 'react-router-dom'
 import { useIndividualBlog } from '../custom-hooks/useIndividualBlog'
 import { useGetUserLikedBlogs } from '../custom-hooks/useGetUserLikedBlogs'
+import handleBlogs from '../services/handleBlogs'
 import ExploreBlog from './ExploreBlog'
 import Alert from '@mui/material/Alert'
 import { Container, Typography, useMediaQuery } from '@mui/material'
 import LoadingSpinner from '../mui-components/LoadingSpinner'
-import CommentForm from '../mui-components/addComment'
+import CommentForm from '../mui-components/CommentForm'
+import CommentPost from '../mui-components/CommentPost'
 
 export default function IndividualBlogPage({ user }) {
 
     const isMobile = useMediaQuery('(max-width:500px)')
 
     const { blogId } = useParams()
-    const { blogInfo, loading, error } = useIndividualBlog(blogId)
+    const { blogInfo, comments, setComments, loading, error } = useIndividualBlog(blogId)
     const { userLikedBlogs } = useGetUserLikedBlogs(user)
 
     const errorPage = (
@@ -29,9 +31,42 @@ export default function IndividualBlogPage({ user }) {
         return errorPage
     }
 
-    const handleCommentSubmit = (event, commentContent) => {
-        // Now you have access to both the event and commentContent in the parent
-        console.log(commentContent)
+    const handleCommentSubmit = async (event, commentContent) => {
+
+        const trimmedContent = commentContent.trim()
+
+        if (trimmedContent.length < 3 || trimmedContent.length === 0) {
+          alert('Invalid comment content. Please enter at least 3 characters.')
+          return
+        }
+
+       try {
+
+        if(user) {
+
+            const newComment = {
+
+                postedBy: {
+                  username: user.username,
+                  id: user.id,
+                },
+                commentContent: trimmedContent,
+              }
+
+            const response = await handleBlogs.addBlogComment(blogId, newComment)
+
+            setComments([response, ...comments])
+            return response
+
+        } else {
+           alert('Please log in to post comments.')
+           return
+        }
+
+       } catch(err) {
+        alert(err)
+       }
+
     }
 
     return <Container sx={{ ml: '20px' }}>
@@ -43,7 +78,10 @@ export default function IndividualBlogPage({ user }) {
     showPostedBy={true}
     isIndividualPage={true}
   />
-  <Typography variant="h5" sx={{ my: '30px' }}>Comments</Typography>
+  <Typography variant="h5" sx={{ my: '30px', ml: '-45px', color: 'black' }}>Comments</Typography>
   <CommentForm onSubmit={handleCommentSubmit}/>
+  {comments.map((comment, index) => (
+          <CommentPost key={index} comment={comment} />
+        ))}
     </Container>
 }

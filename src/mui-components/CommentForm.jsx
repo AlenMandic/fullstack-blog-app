@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, TextField } from '@mui/material'
 
-const CommentForm = ({ onSubmit }) => {
+export default function CommentForm ({ onSubmit }) {
   const [comment, setComment] = useState('')
 
   const handleCommentChange = (event) => {
@@ -15,16 +15,16 @@ const CommentForm = ({ onSubmit }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginLeft: '-50px', minWidth: '16rem', maxWidth: '50%' }}>
+    <form onSubmit={handleSubmit} style={{ marginLeft: '-45px', minWidth: '16rem', maxWidth: '50%' }}>
       <TextField
         label="Add a comment"
-        variant="outlined"
+        variant="filled"
         multiline
         rows={2}
         fullWidth
         value={comment}
         onChange={handleCommentChange}
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 2, border: 'solid 1px black', borderRadius: '4px' }}
         inputProps={{ minLength: 3, maxLength: 200 }}
       />
       <Button
@@ -32,12 +32,9 @@ const CommentForm = ({ onSubmit }) => {
         variant="outlined"
         color="primary"
         sx={{ border: 'solid 1px black', color: 'black' }}
-        disabled={!comment.trim()} // Disable button if the comment is empty or contains only whitespaces
       >
         Submit
       </Button>
     </form>
   )
 }
-
-export default CommentForm

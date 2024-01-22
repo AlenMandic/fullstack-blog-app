@@ -5,6 +5,7 @@ import BlogPostCard from '../mui-components/ExploreBlog'
 export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showPostedBy, isIndividualPage }) {
 
   const [userLikedBlogs, setUserLikedBlogs] = useState(getUserLikedBlogs)
+  const [commentLength, setCommentLength] = useState(blogObject.comments.length)
   const [isLiked, setIsLiked] = useState(() => {
 
     const isThisLiked = userLikedBlogs.includes(blogObject.id)
@@ -43,5 +44,5 @@ useEffect(() => {
     return result.data
   }
 
-  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} isIndividualPage={isIndividualPage} />
+  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} isIndividualPage={isIndividualPage} commentLength={commentLength} />
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/blogs'
+const baseUrl = '/blogs'
 
 let token = null
 
@@ -71,15 +71,16 @@ const deleteBlog = async blogId => {
     console.log(err)
   }
 }
-
+// for rendering user profile homepage
 const getUserBlogs = async userInfo => {
-  // if user is logged in, all of their blogs should be rendered on the page.
+
   if (token !== null) {
     try {
+
       let userId
       userId = userInfo.username
 
-      let userBlogsUrl = `http://localhost:3003/users/${userId}/blogs`
+      let userBlogsUrl = `/users/${userId}/blogs`
 
       const response = await axios.get(userBlogsUrl)
 
@@ -95,4 +96,21 @@ const getUserBlogs = async userInfo => {
   return []
 }
 
-export default { setToken, addBlog, getUserBlogs, getAllBlogs, getIndividualBlog, deleteBlog }
+// logged in users can add new comments to individual blog pages
+const addBlogComment = async (blogId, commentObject) => {
+
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  try {
+    const response = await axios.post(`${baseUrl}/${blogId}/comments`, commentObject, config)
+    return response.data
+
+  } catch(err) {
+    console.log(err)
+  }
+
+}
+
+export default { setToken, addBlog, addBlogComment, getUserBlogs, getAllBlogs, getIndividualBlog, deleteBlog }

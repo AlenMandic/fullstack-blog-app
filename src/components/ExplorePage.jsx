@@ -71,7 +71,7 @@ export default function ExplorePage({ user }) {
 
   return (
     <div>
-      <h1>Front Page</h1>
+      <h1 style={{ color: 'black' }}>Front Page</h1>
       <h3>Explore blogs posted by others and interact with them.</h3>
       <BasicSelect sorting={sorting} setSorting={setSorting} />
       {returnSortedPage}
