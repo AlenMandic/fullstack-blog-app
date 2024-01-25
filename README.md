@@ -2,7 +2,7 @@
 
 # Link to deployed site: https://blog-list-app-backend.fly.dev
 
-A website for sharing, exploring and engaging with various blog posts from around the internet. Users can create an account, log in, and like/comment on blog posts. Authentication is done using JSON web tokens. For full in-depth details on how this was done, refer to the back-end repository: https://github.com/AlenMandic/fullstack-blog-app-backend
+A website for sharing, exploring and engaging with various blog posts from around the internet. Users can create an account, log in, and explore, post, like and comment on blog posts. Authentication is done using JSON web tokens. For full in-depth details on how this was done, refer to the back-end repository: https://github.com/AlenMandic/fullstack-blog-app-backend
 
 This project was made with the intention of having a website to save and browse other curated unique blog posts from around the internet. When searching for interesting blog posts via google you will only find entire blogs, and finding unique and interesting individual blog posts can be very hard.
 
