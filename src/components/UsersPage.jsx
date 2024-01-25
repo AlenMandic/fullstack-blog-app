@@ -18,11 +18,11 @@ if (error) {
 
 const ourUsers = <List>
 {users.map((user) => (
-  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', borderRadius: '4px', color: 'black', '&:hover': { backgroundColor: 'black', color: 'white' }  }}>
-    <ListItemText primary={<Typography variant="subtitle2" component="div" sx={{ fontSize: '20px' }}>
+  <ListItemButton key={user.id} component={Link} to={`/api/users/${user.id}`} sx={{ textDecoration: 'none', borderBottom: 'solid 2px black', borderRadius: '4px', color: 'black', '&:hover': { backgroundColor: 'black', color: 'white' }  }}>
+    <ListItemText primary={<Typography variant="subtitle2" component="div" sx={{ fontSize: '17px' }}>
           <span>{user.name}</span>
           <span> - Posted</span>
-          <span style={{ marginLeft: '4px', fontSize: '30px' }}>{user.blogs.length}</span>
+          <span style={{ marginLeft: '4px', fontSize: '30px', color: 'blue' }}>{user.blogs.length}</span>
           <span> blogs</span>
         </Typography>} />
   </ListItemButton>
@@ -31,7 +31,7 @@ const ourUsers = <List>
 
     return (
     <>
-    <h1>Welcome to our users page.</h1>
+    <h1>Our users page.</h1>
     <p>View individual user profiles and their posts.</p>
     {ourUsers}
     </>

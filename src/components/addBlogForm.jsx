@@ -2,6 +2,7 @@ import { React, useState } from 'react'
 import blogService from '../services/handleBlogs'
 import { NotificationError, NotificationSuccess } from './Notification'
 import { Button, TextField, Typography } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
 import { showErrorNotification, showSuccessNotification } from '../utils'
 
 export default function AddBlog({ updateUserPageState }) {
@@ -59,7 +60,7 @@ export default function AddBlog({ updateUserPageState }) {
             <TextField variant="outlined" label="Title" type="text" name="title-input"  required value={title} onChange={({
                 target
               }) => setTitle(target.value)}
-               style={{ margin: '10px', borderRadius: '4px' }}
+               style={{ margin: '5px' }}
                 inputProps={{
                 minLength: '5',
                  maxLength: '60',
@@ -69,7 +70,7 @@ export default function AddBlog({ updateUserPageState }) {
             <TextField variant="outlined" label="Author" type="text" name="author-input"  required value={author} onChange={({
                 target
               }) => setAuthor(target.value)}
-               style={{ margin: '10px' }}
+               style={{ margin: '5px' }}
                 inputProps={{
                 minLength: '5',
                  maxLength: '60'
@@ -79,7 +80,7 @@ export default function AddBlog({ updateUserPageState }) {
             <TextField variant="outlined" label="URL" type="text" name="url-input"  required value={url} onChange={({
                 target
               }) => setUrl(target.value)}
-               style={{ margin: '10px' }}
+               style={{ margin: '5px' }}
                 inputProps={{
                 minLength: '5',
                  maxLength: '100'
@@ -89,24 +90,24 @@ export default function AddBlog({ updateUserPageState }) {
             <TextField variant="outlined" label="Likes" type="number" name="likes-input" value={likes} onChange={({
                 target
               }) => setLikes(target.value)}
-               style={{ margin: '10px' }}
+               style={{ margin: '5px' }}
                 inputProps={{
                 minLength: '5',
                  maxLength: '60'
               }}></TextField>
             </div>
             <div>
-              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px', border: 'solid 1px black', color: 'black' }}>Post</Button>
+              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px', border: 'solid 1px black', color: 'black', mr: '12px' }} endIcon={<SendIcon />}>Post</Button>
+              <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Cancel</Button>
             </div>
           </form>
-          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Cancel</Button>
         </>
       )
     } else {
       return <>
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
-          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', width: '250px', height: '60px', marginBottom: '30px', border: 'solid 1px black', color: 'black' }}>Post a new blog</Button>
+          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', width: '200px', height: '60px', my: '30px', border: 'solid 1px black', color: 'black' }} endIcon={<SendIcon />}>Post a new blog</Button>
             </>
     }
   }

@@ -38,7 +38,7 @@ export default function UserPage({ user }) {
 
         const likesElement = (
             <div>
-            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginLeft: '-50px', color: 'black' }}>Total likes: <p style={{ color: 'blue' }}>{sumTotalLikes}</p></h1>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginLeft: '-30px', color: 'black' }}>Total likes: <p style={{ color: 'blue' }}>{sumTotalLikes}</p></h1>
             </div>
         )
 
@@ -47,9 +47,9 @@ export default function UserPage({ user }) {
 
     const userPage =  (
         <div className="userPage">
-        <h1 style={{ marginLeft: '-50px', color: 'black' }}>Welcome to {currentUserProfile.name}{'\''}s profile</h1>
+        <h1 style={{ marginLeft: '-30px', color: 'black' }}>{currentUserProfile.name}</h1>
         {getTotalLikes()}
-        <h2 style={{ marginLeft: '-50px', color: 'black' }}>Blogs posted:</h2>
+        <h2 style={{ marginLeft: '-30px', color: 'black' }}>Blogs posted:</h2>
         </div>
     )
 

@@ -15,7 +15,7 @@ export default function CommentForm ({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginLeft: '-45px', minWidth: '16rem', maxWidth: '50%' }}>
+    <form onSubmit={handleSubmit} style={{ marginLeft: '-45px', minWidth: '18rem', maxWidth: '50%' }}>
       <TextField
         label="Add a comment"
         variant="filled"

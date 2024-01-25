@@ -9,8 +9,8 @@ export default function CommentPost ({ comment }) {
         padding: 2,
         marginTop: 2,
         ml: '-45px',
-        minWidth: '16rem',
-        maxWidth: '50%',
+        minWidth: '21rem',
+        maxWidth: '70%',
       }}
       elevation={2}
     >
