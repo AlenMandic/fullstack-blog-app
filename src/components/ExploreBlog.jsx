@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import userLikeService from '../services/handleUserLikes'
 import BlogPostCard from '../mui-components/ExploreBlog'
 
-export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showPostedBy, isIndividualPage }) {
+export default function ExploreBlog({ blogObject, user, getUserLikedBlogs, showPostedBy, isIndividualPage, isRandomBlog }) {
 
   const [userLikedBlogs, setUserLikedBlogs] = useState(getUserLikedBlogs)
   const [commentLength, setCommentLength] = useState(blogObject.comments.length)
@@ -44,5 +44,5 @@ useEffect(() => {
     return result.data
   }
 
-  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} isIndividualPage={isIndividualPage} commentLength={commentLength} />
+  return <BlogPostCard blogObject={blogObject} showPostedBy={showPostedBy} isLiked={isLiked} user={user} handleBlogLike={handleBlogLike} handleBlogDislike={handleBlogDislike} isIndividualPage={isIndividualPage} commentLength={commentLength} isRandomBlog={isRandomBlog} />
 }

@@ -47,7 +47,7 @@ export default function StickyFooter() {
             px: 2,
             color: 'black',
             borderRadius: '4px',
-            backgroundColor: 'white',
+            backgroundColor: '#a29797',
             minWidth: '40%',
           }}
         >

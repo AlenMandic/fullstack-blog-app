@@ -132,7 +132,7 @@ export default function SignInSide({ username, setUsername, password, setPasswor
 
   return (
     <>
-     {!user && <Typography variant={isMobile ? 'h6' : 'h4'} sx={{ textAlign: 'center', mb: '40px' }}>Have an account? Log In</Typography>}
+     {!user && <Typography variant={isMobile ? 'h6' : 'h4'} sx={{ textAlign: 'center', my: '80px' }}>Have an account? Log In</Typography>}
      {!user && notLoggedIn}
      {user && loggedIn}
     </>

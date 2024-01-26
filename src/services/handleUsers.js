@@ -13,6 +13,7 @@ const getAllUsers = async () => {
 }
 
 const getIndividualUser = async (userId) => {
+
     try {
 
        const response = await axios.get(`${baseUrl}/${userId}`)

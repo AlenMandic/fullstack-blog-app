@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardContent, Typography, IconButton, CardActions, Avatar, Link, Button, useMediaQuery, useTheme } from '@mui/material'
+import { Card, CardContent, Typography, IconButton, CardActions, Avatar, Link, Button, useMediaQuery, useTheme, Box } from '@mui/material'
 import { styled } from '@mui/system'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Link as RouterLink } from 'react-router-dom'
@@ -45,13 +45,7 @@ const UserPostCard = ({ blogObject, handleDeleteCallback }) => {
        </CardContent>
       <CardActions>
 
-        <StyledAvatar sx={{ backgroundColor: 'blue' }}>{authorInitials}</StyledAvatar>
-        <StyledButton color="primary" sx={{ fontSize: isSmallerWidth ? '16px': '22px', ml: '0px', color:'black' }}>
-          Likes: {blogObject.likes}
-        </StyledButton>
-<IconButton aria-label="delete" onClick={handleDeleteCallback}>
-    <DeleteIcon sx={{ color: 'blue', mr: '15px', fontSize: '30px' }}/>
-  </IconButton>
+<Button aria-label="delete" onClick={handleDeleteCallback} startIcon={<DeleteIcon />} sx={{ color: 'black', mr: '5px', border: 'solid 1px black' }} variant="outlined">Delete</Button>
   <RouterLink to={`/api/blogs/${blogObject.id}`}>
   <Button
   color="primary"
@@ -62,6 +56,12 @@ const UserPostCard = ({ blogObject, handleDeleteCallback }) => {
 </Button>
   </RouterLink>
       </CardActions>
+      <Box sx={{ display: 'flex' }}>
+      <StyledAvatar sx={{ backgroundColor: 'blue', m: '10px' }}>{authorInitials}</StyledAvatar>
+      <StyledButton color="primary" sx={{ fontSize: isSmallerWidth ? '16px': '22px', ml: '0px', color:'black' }}>
+          Likes: {blogObject.likes}
+        </StyledButton>
+      </Box>
     </StyledCard>
   )
 }

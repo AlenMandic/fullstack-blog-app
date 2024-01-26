@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, TextField } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
 
 export default function CommentForm ({ onSubmit }) {
   const [comment, setComment] = useState('')
@@ -15,7 +16,7 @@ export default function CommentForm ({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginLeft: '-45px', minWidth: '16rem', maxWidth: '50%' }}>
+    <form onSubmit={handleSubmit} style={{ marginLeft: '-45px', minWidth: '18rem', maxWidth: '50%' }}>
       <TextField
         label="Add a comment"
         variant="filled"
@@ -24,16 +25,17 @@ export default function CommentForm ({ onSubmit }) {
         fullWidth
         value={comment}
         onChange={handleCommentChange}
-        sx={{ marginBottom: 2, border: 'solid 1px black', borderRadius: '4px' }}
+        sx={{ marginBottom: 2, border: 'solid 1px black', borderRadius: '4px', backgroundColor: 'white'  }}
         inputProps={{ minLength: 3, maxLength: 200 }}
       />
       <Button
         type="submit"
         variant="outlined"
         color="primary"
-        sx={{ border: 'solid 1px black', color: 'black' }}
+        sx={{ border: 'solid 1px black', color: 'black', backgroundColor: 'white' }}
+        endIcon={<SendIcon />}
       >
-        Submit
+        Send
       </Button>
     </form>
   )

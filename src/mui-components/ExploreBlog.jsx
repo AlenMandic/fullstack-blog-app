@@ -28,7 +28,7 @@ const getInitials = (name) => {
   return nameArray.map(part => part.charAt(0)).join('')
 }
 
-const BlogPostCard = ({ blogObject, showPostedBy, isLiked, user, handleBlogLike, handleBlogDislike, isIndividualPage, commentLength }) => {
+const BlogPostCard = ({ blogObject, showPostedBy, isLiked, user, handleBlogLike, handleBlogDislike, isIndividualPage, commentLength, isRandomBlog }) => {
 
   const authorInitials = getInitials(blogObject.author)
   const theme = useTheme()
@@ -78,9 +78,12 @@ const BlogPostCard = ({ blogObject, showPostedBy, isLiked, user, handleBlogLike,
 </Button>
 </RouterLink>}
       </CardActions>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>{showLikeButton()}<Typography variant="h6" sx={{ ml: '-20px', color: 'black' }}>{blogObject.likes}</Typography>
+      {!isRandomBlog && <Box sx={{ display: 'flex', alignItems: 'center' }}>{showLikeButton()}<Typography variant="h6" sx={{ ml: '-20px', color: 'black' }}>{blogObject.likes}</Typography>
 <RouterLink to={`/api/blogs/${blogObject.id}`} style={{ textDecoration: 'none' }}><Typography variant="h6" sx={{ ml: '20px', my: '5px', cursor: 'pointer', color: 'black' }}>{commentLength} comments</Typography></RouterLink>
-</Box>
+</Box>}
+{isRandomBlog && <Box sx={{ display: 'flex', alignItems: 'center' }}><Typography variant="h6" sx={{ ml: '10px', color: 'black' }}>Likes: {blogObject.likes}</Typography>
+<RouterLink to={`/api/blogs/${blogObject.id}`} style={{ textDecoration: 'none' }}><Typography variant="h6" sx={{ ml: '20px', my: '5px', cursor: 'pointer', color: 'black' }}>{commentLength} comments</Typography></RouterLink>
+</Box>}
     </StyledCard>
   )
 }

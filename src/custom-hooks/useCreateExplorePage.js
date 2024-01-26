@@ -15,7 +15,7 @@ export const useCreateExplorePage = () => {
 
           try {
             setLoading(true)
-            const response = await blogService.getAllBlogs({ page, limit: 5 })
+            const response = await blogService.getAllBlogs({ page, limit: 10 })
 
             if(page === 1) {
               setExplorePageState(response)
