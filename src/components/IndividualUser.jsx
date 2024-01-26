@@ -21,7 +21,7 @@ export default function UserPage({ user }) {
     }
 
     const userBlogs = currentUserBlogs.map(blog => (
-        <ExploreBlog key={blog.id} blogObject={blog} user={user} getUserLikedBlogs={userLikedBlogs} showPostedBy={false} isIndividualPage={false} />
+        <ExploreBlog key={blog.id} blogObject={blog} user={user} getUserLikedBlogs={userLikedBlogs} showPostedBy={false} isIndividualPage={false} isRandomBlog={false} />
     ))
 
     const errorPage = (

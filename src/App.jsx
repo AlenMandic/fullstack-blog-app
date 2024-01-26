@@ -10,7 +10,7 @@ import LoadingSpinner from './mui-components/LoadingSpinner'
 // Regular imports
 import './style.css'
 import { showErrorNotification, showSuccessNotification } from './utils'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import loginService from './services/handleSignUpLogin'
 import blogService from './services/handleBlogs'
 import userLikesService from './services/handleUserLikes'
@@ -39,6 +39,8 @@ export default function App() {
   const [notificationSuccess, setNotificationSuccess] = useState(null)
   const [showUserPosts, setShowUserPosts] = useState(true)
 
+  const randomBlogRef = useRef(null)
+
   // If user is logged in on their ususal device: retrieve the user once on mount and store it. Give token to relevant services.
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedInBlogAppUser')
@@ -55,7 +57,7 @@ export default function App() {
   const { explorePageState, setExplorePageState, loading, error } = useCreateExplorePage()
   // custom hook for logged in user and automatic logout detector
   const { blogs, setUserBlogs, loadingUserProfile, errorUserProfile } = useUserProfile(user, handleLogout)
-// custom hook to ensure displaying a random blog post works
+// handle user data for random blog post
   const { userLikedBlogs } = useGetUserLikedBlogs(user)
 
   if(loading) {
@@ -135,12 +137,12 @@ export default function App() {
     if(showUserPosts) {
       return (
         <div>
-          <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Hide posts</Button>
+          <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black', backgroundColor: 'white' }}>Hide posts</Button>
           <ul>{blogs.map((blog) => (<UserBlog key={blog.id} blogObject={blog} handleDeleteCallback={handleDelete}/>))}</ul>
         </div>
       )
     } else {
-      return <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Show your posts</Button>
+      return <Button variant="outlined" onClick={toggleUserPosts} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black', backgroundColor: 'white' }}>Show your posts</Button>
     }
   }
 
@@ -161,8 +163,13 @@ export default function App() {
      getUserLikedBlogs={userLikedBlogs}
      showPostedBy={true}
      isIndividualPage={false}
+     isRandomBlog={true}
      />
     </Container>
+  }
+// on component mount, set useRef to 'random blog card' so it doesn't get re-rendered by any App.jsx state change.
+  if(!randomBlogRef.current) {
+    randomBlogRef.current = displayRandomBlog() // returns a React.JSX element, which will hold the ref.
   }
 
   return (
@@ -188,7 +195,7 @@ export default function App() {
               <Typography variant="h5" sx={{ my: '35px', color: 'black' }}>Browse the Front Page 🌍</Typography>
               </Link>
             {!user && <div><Alert severity="info" sx={{ backgroundColor: '#1f1f54', color: 'white', fontSize: '18px', my: '40px' }}><strong><Link to="/api/login" style={{ color: 'white', marginRight: '5px' }}>Log in </Link>  </strong>to be able to post and like other blogs!<br></br>Your profile will appear here.</Alert></div>}
-            {displayRandomBlog()}
+            {randomBlogRef.current}
             {user && (<div>{<AddBlog updateUserPageState={handleBlogSubmitCallback} user={user}/>}<h1>Your blogs</h1>{handleUserPosts()}</div>)}
               </>}
              />

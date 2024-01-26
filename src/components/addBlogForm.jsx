@@ -54,8 +54,9 @@ export default function AddBlog({ updateUserPageState }) {
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
           {' '}
-          <Typography variant="h5">Post a new blog</Typography>
-          <form onSubmit={handleBlogSubmit}>
+          <form onSubmit={handleBlogSubmit} style={{ backgroundColor: 'white', width: '290px', height: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '8px' }}>
+
+          <Typography variant="h5" sx={{ mt: '20px' }}>Post a new blog</Typography>
             <div>
             <TextField variant="outlined" label="Title" type="text" name="title-input"  required value={title} onChange={({
                 target
@@ -97,8 +98,8 @@ export default function AddBlog({ updateUserPageState }) {
               }}></TextField>
             </div>
             <div>
-              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px', border: 'solid 1px black', color: 'black', mr: '12px' }} endIcon={<SendIcon />}>Post</Button>
-              <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black' }}>Cancel</Button>
+              <Button variant="outlined" type="submit" sx={{ fontWeight: '600', my: '15px', border: 'solid 1px black', color: 'black', mr: '12px', backgroundColor: 'white' }} endIcon={<SendIcon />}>Post</Button>
+              <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', border: 'solid 1px black', color: 'black', backgroundColor: 'white' }}>Cancel</Button>
             </div>
           </form>
         </>
@@ -107,7 +108,7 @@ export default function AddBlog({ updateUserPageState }) {
       return <>
           <NotificationError message={notificationError} />
           <NotificationSuccess message={notificationSuccess} />
-          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', width: '200px', height: '60px', my: '30px', border: 'solid 1px black', color: 'black' }} endIcon={<SendIcon />}>Post a new blog</Button>
+          <Button variant="outlined" onClick={handleShowPostBlogForm} sx={{ fontWeight: '600', width: '200px', height: '60px', my: '30px', border: 'solid 1px black', color: 'black', backgroundColor: 'white' }} endIcon={<SendIcon />}>Post a new blog</Button>
             </>
     }
   }
